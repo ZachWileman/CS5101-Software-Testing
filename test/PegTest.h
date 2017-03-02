@@ -6,9 +6,17 @@
 
 class PegTest
 {
-private:
+
+	//CPPUNIT_TEST_SUITE(PegTest);
+	//CPPUNIT_TEST();
 
 public:
+	//PegTest();
+
+protected:
+
+
+private:
 
 };
 
