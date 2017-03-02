@@ -1,5 +1,8 @@
 //Group Members: Alfonso Miguel Santos-Tankia and Zachary Wileman
+#include <iostream>
 #include "Peg.h"
+
+using namespace std;
 
 // Parameters:
 //			  current_val: what the value of the current peg is
