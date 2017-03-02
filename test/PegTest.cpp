@@ -1,5 +1,6 @@
 //Group Members: Alfonso Miguel Santos-Tankia and Zachary Wileman
 #include "../Peg.h"
+#include "PegTest.h"
 
 using namespace std;
 
@@ -21,42 +22,44 @@ void PegTest::testAssignValues()
 	CPPUNIT_ASSERT(testPeg1.getPeg() == 'A');
 }
 
+/*
 void PegTest::testUpdatePeg()
 {
-	CPPUNIT_ASSERT();
+	//CPPUNIT_ASSERT();
 }
 
 void PegTest::testIsValid()
 {
-	CPPUNIT_ASSERT();
+	//CPPUNIT_ASSERT();
 }
 
 void PegTest::testSetValidLocation()
 {
-	CPPUNIT_ASSERT();
+	//CPPUNIT_ASSERT();
 }
 
 void PegTest::testSetToSpace()
 {
-	CPPUNIT_ASSERT();
+	//CPPUNIT_ASSERT();
 }
 
 void PegTest::testGetPeg()
 {
-	CPPUNIT_ASSERT();
+	//CPPUNIT_ASSERT();
 }
 
 void PegTest::testGetLayer()
 {
-	CPPUNIT_ASSERT();
+	//CPPUNIT_ASSERT();
 }
 
 void PegTest::testGetRow()
 {
-	CPPUNIT_ASSERT();
+	//CPPUNIT_ASSERT();
 }
 
 void PegTest::testGetCol()
 {
-	CPPUNIT_ASSERT();
+	//CPPUNIT_ASSERT();
 }
+*/

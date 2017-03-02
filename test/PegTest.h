@@ -8,17 +8,16 @@ using namespace CppUnit;
 
 class PegTest : public TestFixture
 {
-
 	CPPUNIT_TEST_SUITE(PegTest);
 	CPPUNIT_TEST(testAssignValues());
-	CPPUNIT_TEST(testUpdatePeg(char current_val));
+	/*CPPUNIT_TEST(testUpdatePeg(char current_val));
 	CPPUNIT_TEST(testIsValid());
 	CPPUNIT_TEST(testSetValidLocation());
 	CPPUNIT_TEST(testSetToSpace());
 	CPPUNIT_TEST(testGetPeg());
 	CPPUNIT_TEST(testGetLayer());
 	CPPUNIT_TEST(testGetRow());
-	CPPUNIT_TEST(testGetCol());
+	CPPUNIT_TEST(testGetCol());*/
 	CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -28,7 +27,7 @@ public:
 
 protected:
 	void testAssignValues();
-
+/*
 	void testUpdatePeg();
 
 	void testIsValid();
@@ -44,7 +43,7 @@ protected:
 	void testGetRow();
 
 	void testGetCol();
-
+*/
 };
 
 #endif
