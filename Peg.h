@@ -1,2 +1,5 @@
 //Group Members: Alfonso Miguel Santos-Tankia and Zachary Wileman
-include "PegJumpController.h"
+#ifndef Peg_h
+#define Peg_h
+
+#endif
