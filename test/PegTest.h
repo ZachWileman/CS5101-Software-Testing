@@ -6,7 +6,7 @@
 
 using namespace CppUnit;
 
-class PegTest
+class PegTest : public TestFixture
 {
 
 	CPPUNIT_TEST_SUITE(PegTest);

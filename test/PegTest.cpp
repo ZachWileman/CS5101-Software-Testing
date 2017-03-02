@@ -16,45 +16,47 @@ void PegTest::teardown()
 
 void PegTest::testAssignValues()
 {
-	CPP_ASSERT();
+	Peg testPeg1;
+	testPeg1.assignValues('A', 2, 2, 3);
+	CPPUNIT_ASSERT(testPeg1.getPeg() == 'A');
 }
 
 void PegTest::testUpdatePeg()
 {
-	CPP_ASSERT();
+	CPPUNIT_ASSERT();
 }
 
 void PegTest::testIsValid()
 {
-	CPP_ASSERT();
+	CPPUNIT_ASSERT();
 }
 
 void PegTest::testSetValidLocation()
 {
-	CPP_ASSERT();
+	CPPUNIT_ASSERT();
 }
 
 void PegTest::testSetToSpace()
 {
-	CPP_ASSERT();
+	CPPUNIT_ASSERT();
 }
 
 void PegTest::testGetPeg()
 {
-	CPP_ASSERT();
+	CPPUNIT_ASSERT();
 }
 
 void PegTest::testGetLayer()
 {
-	CPP_ASSERT();
+	CPPUNIT_ASSERT();
 }
 
 void PegTest::testGetRow()
 {
-	CPP_ASSERT();
+	CPPUNIT_ASSERT();
 }
 
 void PegTest::testGetCol()
 {
-	CPP_ASSERT();
+	CPPUNIT_ASSERT();
 }
