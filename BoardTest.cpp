@@ -73,7 +73,7 @@ void BoardTest::testSetupBoard(void)
 
 void BoardTest::setUp(void)
 {
-    mTestObj = new Peg();
+    mTestObj = new Board();
 }
 
 void BoardTest::tearDown(void)
