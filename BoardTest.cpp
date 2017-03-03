@@ -30,7 +30,9 @@ class BoardTest: public CppUnit::TestFixture {
 	CPPUNIT_TEST (testGetNumBoardPositions);
 	CPPUNIT_TEST (testSetupBoard);
 	CPPUNIT_TEST (testUpdateBoard);
-	CPPUNIT_TEST (testCheckMove);CPPUNIT_TEST_SUITE_END();
+	CPPUNIT_TEST (testCheckMove);
+	CPPUNIT_TEST (testClearBoard);
+	CPPUNIT_TEST_SUITE_END();
 
 public:
 	void setUp(void);
@@ -43,7 +45,7 @@ protected:
 	void testSetupBoard(void);
 	void testUpdateBoard(void);
 	void testCheckMove(void);
-
+	void testClearBoard(void);
 private:
 	Board *mTestObj;
 };
@@ -84,6 +86,13 @@ void BoardTest::testCheckMove(void) {
 	Board testBoard;
 	testBoard.setupBoard(1);
 	CPPUNIT_ASSERT(testBoard.checkMove('B', 'C') == false);
+}
+
+void BoardTest::testClearBoard(void){
+	Board testBoard;
+	testBoard.setupBoard(1);
+	testBoard.clearBoard();
+	CPPUNIT_ASSERT(testBoard.testLocation(2, 6, ' ') == true);
 }
 
 void BoardTest::setUp(void) {
