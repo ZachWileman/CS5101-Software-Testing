@@ -3,6 +3,7 @@
 #define PegJumpView_h
 
 #include <iostream>
+#include <cstdlib>
 using namespace std;
 
 class PegJumpView {
@@ -13,8 +14,6 @@ public:
 	void printStart();
 
 	void gameSelect();
-
-	void printMenu(int gamescore[]);
 
 	void invalidChoice();
 
