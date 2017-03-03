@@ -1,5 +1,5 @@
-#ifndef Board_h
-#define Board_h
+#ifndef BOARD_H
+#define BOARD_H
 
 const char boardPerimeter = '*';
 const char boardPositions[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U'};
