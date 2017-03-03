@@ -47,6 +47,7 @@ int main()
   string gameRestart;
   int difficulty;
   char input1 = SPACE, input2 = SPACE;
+  vector<Peg> pegRemainder;
 	bool invalidMove;
   Board pegBoard;
 
