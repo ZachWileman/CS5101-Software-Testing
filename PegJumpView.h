@@ -2,6 +2,9 @@
 #ifndef PegJumpView_h
 #define PegJumpView_h
 
+#include <iostream>
+using namespace std;
+
 class PegJumpView {
 public:
 	// Null constructor
