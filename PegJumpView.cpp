@@ -42,3 +42,17 @@ void PegJumpView::selectDifficulty(){
 void PegJumpView::firstPeg(){
 	cout << "Please enter the fist peg to remove on the board by entering a letter corresponding to the peg board." << endl;
 }
+
+void PegJumpView::twoPeg(){
+	cout << "Please enter the first and second peg separated by space (ex. \"A B\") where the first character is the peg \n"
+		 <<	"you want to move and the second character is the position of the peg you wish to jump over. If at any point,\n"
+		 <<	"you would like to automatically solve your game, enter the number 8" << endl;
+}
+
+void PegJumpView::solutionFound(){
+	cout << endl << "See above for solution" << endl;
+}
+
+void PegJumpView::noSolution(){
+	cout << endl << "No solution found" << endl;
+}

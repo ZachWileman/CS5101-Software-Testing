@@ -27,6 +27,11 @@ public:
 
 	void selectDifficulty();
 
+	void twoPeg();
+
+	void solutionFound();
+
+	void noSolution();
 };
 
 #endif
