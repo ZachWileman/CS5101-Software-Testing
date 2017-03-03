@@ -99,27 +99,27 @@ void PegTest::testUpdatePeg(void)
 	CPPUNIT_ASSERT(testPeg.getPeg() == 'B');
 }
 
-void testIsValid(void)
+void PegTest::testIsValid(void)
 {
 	Peg testPeg;
 	CPPUNIT_ASSERT(false == testPeg.isValid());
 }
 
-void testSetValidLocation(void)
+void PegTest::testSetValidLocation(void)
 {
 	Peg testPeg;
 	testPeg.setValidLocation();
 	CPPUNIT_ASSERT(testPeg.isValid() == true);
 }
 
-void testSetInvalidLocation(void)
+void PegTest::testSetInvalidLocation(void)
 {
 	Peg testPeg;
 	testPeg.setInvalidLocation();
 	CPPUNIT_ASSERT(testPeg.isValid() == false);
 }
 
-void testSetToSpace(void)
+void PegTest::testSetToSpace(void)
 {
 	Peg testPeg;
 	testPeg.setToSpace();
