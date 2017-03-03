@@ -122,7 +122,7 @@ int main()
       else if (!pegBoard.checkMove(input1, input2))
       {
         invalidMove = true;
-        View.invalidMove();
+        View.invalidChoice();
       }
 
     } while (invalidMove);
