@@ -45,13 +45,10 @@ int main()
   int gameScore[numGames] = {0};
   int gameSelected;
   string gameRestart;
-<<<<<<< Updated upstream
   int difficulty;
-=======
   char input1 = SPACE, input2 = SPACE;
 	bool invalidMove;
   Board pegBoard;
->>>>>>> Stashed changes
 
   View.printStart();
 
