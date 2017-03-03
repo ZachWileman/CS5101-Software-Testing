@@ -7,15 +7,13 @@ const string gameNames[] = {"Peg Jump"};
 
 void printMenu(int gameScore[])
 {
+  PegJumpView View;
 	int menuChoice;
 
 	do
 	{
-		cout << endl;
-		cout << "Please enter the number corresponding to what you would like to do:" << endl;
-		cout << "1.) Display cumulative game scores for each game" << endl;
-		cout << "2.) Exit the program" << endl;
-		cout << "3.) Return to what you were doing" << endl;
+    View.menu();
+
 		if (!(cin >> menuChoice))
 		{
 			cin.clear();
@@ -23,7 +21,7 @@ void printMenu(int gameScore[])
 		}
 
 		if (menuChoice != 1 && menuChoice != 2 && menuChoice != 3)
-			cout << "Please enter a valid menu choice" << endl;
+			View.invalidChoice();
 
 	} while (menuChoice != 1 && menuChoice != 2 && menuChoice != 3);
 
