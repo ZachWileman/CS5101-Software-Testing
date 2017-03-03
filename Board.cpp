@@ -1,7 +1,5 @@
 #include "Board.h"
 
-using namespace std;
-
 int Board::getCol() {
 	return m_col;
 }

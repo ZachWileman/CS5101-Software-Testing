@@ -4,6 +4,8 @@
 #include "Peg.h"
 #include <cmath>
 #include <vector>
+#include <iostream>
+using namespace std;
 
 const char boardPerimeter = '*';
 const char boardPositions[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
