@@ -28,8 +28,7 @@ void printMenu(int gameScore[])
 	switch(menuChoice)
 	{
 		case 1:
-			for(int i = 0; i < numGames; i++)
-				cout << gameNames[i] << " Score: " << gameScore[i] << endl;
+      View.printScores(numGames, gameNames, gameScore);
 			break;
 		case 2:
 			exit(EXIT_SUCCESS);
@@ -67,6 +66,32 @@ int main()
         View.invalidChoice();
 
 		} while (gameSelected != 1);
+
+    /////////////
+    switch (gameSelected)
+		{
+			case 1:
+				do
+				{
+          View.selectDifficulty();
+
+					if (!(cin >> difficulty))
+					{
+						cin.clear();
+						cin.ignore();
+					}
+
+					if (difficulty == 9)
+						printMenu(gameScore);
+
+					else if (difficulty != 1 && difficulty != 2 && difficulty != 3)
+						View.invalidChoice();
+
+				} while (difficulty != 1 && difficulty != 2 && difficulty != 3);
+
+        break;
+    }
+    /////////////
 
     do
     {
