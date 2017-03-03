@@ -18,6 +18,11 @@ public:
 	void invalidChoice();
 
 	void playAgain();
+
+	void menu();
+
+	void printScores(int numGames, string gameNames[], int gameScore[]);
+
 };
 
 #endif

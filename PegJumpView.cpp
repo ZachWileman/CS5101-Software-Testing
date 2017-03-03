@@ -18,3 +18,16 @@ void PegJumpView::invalidChoice(){
 void PegJumpView::playAgain(){
 	cout << "Would you like to play another game (y=yes)?" << endl;
 }
+
+void PegJumpView::menu(){
+	cout << endl;
+	cout << "Please enter the number corresponding to what you would like to do:" << endl;
+	cout << "1.) Display cumulative game scores for each game" << endl;
+	cout << "2.) Exit the program" << endl;
+	cout << "3.) Return to what you were doing" << endl;
+}
+
+void PegJumpView::printScores(int numGames, string gameNames[], int gameScore[]){
+	for(int i = 0; i < numGames; i++)
+		cout << gameNames[i] << " Score: " << gameScore[i] << endl;
+}
