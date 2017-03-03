@@ -95,7 +95,6 @@ int main()
 
         break;
     }
-    /////////////
 
     // Resets peg board
     pegBoard.setupBoard(difficulty);
@@ -128,6 +127,68 @@ int main()
     } while (invalidMove);
 
     /////////////
+
+    pegBoard.updateBoard(input1, input2);
+    gameScore[gameSelected-1]++;
+
+    while (pegBoard.checkBoard())
+    {
+      do
+      {
+        pegRemainder = pegBoard.remainingPegs();
+
+        pegBoard.printBoard();
+        View.twoPeg();
+        invalidMove = false;
+
+        if (!(cin >> input1))
+        {
+          cin.clear();
+          cin.ignore();
+        }
+
+        if (input1 == '8')
+        {
+          // Implement Autosolver
+          if (true)
+            View.solutionFound();
+          else
+            View.noSolution();
+
+          invalidMove = true;
+        }
+
+        else if (input1 == '9')
+        {
+          printMenu(gameScore);
+          invalidMove = true;
+        }
+
+        else
+        {
+          if (!(cin >> input2))
+          {
+            cin.clear();
+            cin.ignore();
+          }
+        }
+
+        if (!pegBoard.checkMove(input1, input2) && input1 != '9' && input1 != '8')
+        {
+          invalidMove = true;
+          View.invalidChoice();
+        }
+
+      } while (invalidMove);
+
+      pegBoard.updateBoard(input1, input2);
+      gameScore[gameSelected-1]++;
+    }
+
+    pegBoard.printBoard();
+
+    ////////////
+
     do
     {
       View.playAgain();
