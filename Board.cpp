@@ -356,3 +356,17 @@ bool Board::checkWin() {
 	else
 		return true;
 }
+
+// Print Board
+//Function: This function prints what the current board looks like
+void Board::printBoard() {
+	for (int i = 0; i < m_row; i++) {
+		if (i > 0)
+			cout << endl << endl;
+
+		for (int j = 0; j < m_col; j++)
+			cout << board[i][j].getPeg() << SPACE;
+	}
+
+	cout << endl << endl;
+}

@@ -58,6 +58,10 @@ public:
 	// Check Win
 	// Function: Checks if the user has won the game
 	bool checkWin();
+
+	// Print Board
+	//Function: This function prints what the current board looks like
+	void printBoard();
 };
 
 #endif
