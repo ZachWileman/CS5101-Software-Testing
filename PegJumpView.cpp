@@ -27,7 +27,7 @@ void PegJumpView::menu(){
 	cout << "3.) Return to what you were doing" << endl;
 }
 
-void PegJumpView::printScores(int numGames, string gameNames[], int gameScore[]){
+void PegJumpView::printScores(int numGames, const string gameNames[], int gameScore[]){
 	for(int i = 0; i < numGames; i++)
 		cout << gameNames[i] << " Score: " << gameScore[i] << endl;
 }

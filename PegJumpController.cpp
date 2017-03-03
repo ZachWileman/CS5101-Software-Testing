@@ -42,8 +42,9 @@ int main()
 {
   PegJumpView View;
   int gameScore[numGames] = {0};
-	int gameSelected;
+  int gameSelected;
   string gameRestart;
+  int difficulty;
 
   View.printStart();
 

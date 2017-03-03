@@ -21,7 +21,7 @@ public:
 
 	void menu();
 
-	void printScores(int numGames, string gameNames[], int gameScore[]);
+	void printScores(int numGames, const string gameNames[], int gameScore[]);
 
 	void selectDifficulty();
 
