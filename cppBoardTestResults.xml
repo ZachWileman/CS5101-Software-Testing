@@ -14,9 +14,27 @@
     <Test id="4">
       <Name>BoardTest::testSetupBoard</Name>
     </Test>
+    <Test id="5">
+      <Name>BoardTest::testUpdateBoard</Name>
+    </Test>
+    <Test id="6">
+      <Name>BoardTest::testCheckMove</Name>
+    </Test>
+    <Test id="7">
+      <Name>BoardTest::testClearBoard</Name>
+    </Test>
+    <Test id="8">
+      <Name>BoardTest::testRemainingPegs</Name>
+    </Test>
+    <Test id="9">
+      <Name>BoardTest::testCheckBoard</Name>
+    </Test>
+    <Test id="10">
+      <Name>BoardTest::testCheckWin</Name>
+    </Test>
   </SuccessfulTests>
   <Statistics>
-    <Tests>4</Tests>
+    <Tests>10</Tests>
     <FailuresTotal>0</FailuresTotal>
     <Errors>0</Errors>
     <Failures>0</Failures>
