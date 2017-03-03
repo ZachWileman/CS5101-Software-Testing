@@ -14,6 +14,8 @@ public:
 	void printMenu(int gamescore[]);
 
 	void invalidChoice();
+
+	void playAgain();
 };
 
 #endif

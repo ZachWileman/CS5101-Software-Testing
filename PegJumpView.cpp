@@ -15,6 +15,10 @@ void PegJumpView::invalidChoice(){
 	cout << "Please enter a valid choice" << endl << endl;
 }
 
+void PegJumpView::playAgain(){
+	cout << "Would you like to play another game (y=yes)?" << endl;
+}
+
 void PegJumpView::printMenu(int gameScore[])
 {
 	int menuChoice;
