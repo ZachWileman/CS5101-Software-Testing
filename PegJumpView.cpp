@@ -2,7 +2,7 @@
 #include "PegJumpView.h"
 
 void PegJumpView::printStart(){
-	cout << "If you wish to exit the game or display the current cumulative scores at any time during the game,\n" <<
+	cout << endl << "If you wish to exit the game or display the current cumulative scores at any time during the game,\n" <<
 			"Enter the number 9 to display a menu with these options." << endl << endl;
 }
 
