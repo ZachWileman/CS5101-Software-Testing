@@ -5,9 +5,36 @@
     <Test id="1">
       <Name>PegTest::testAssignValues</Name>
     </Test>
+    <Test id="2">
+      <Name>PegTest::testUpdatePeg</Name>
+    </Test>
+    <Test id="3">
+      <Name>PegTest::testGetPeg</Name>
+    </Test>
+    <Test id="4">
+      <Name>PegTest::testGetLayer</Name>
+    </Test>
+    <Test id="5">
+      <Name>PegTest::testGetRow</Name>
+    </Test>
+    <Test id="6">
+      <Name>PegTest::testGetColumn</Name>
+    </Test>
+    <Test id="7">
+      <Name>PegTest::testIsValid</Name>
+    </Test>
+    <Test id="8">
+      <Name>PegTest::testSetInvalidLocation</Name>
+    </Test>
+    <Test id="9">
+      <Name>PegTest::testSetValidLocation</Name>
+    </Test>
+    <Test id="10">
+      <Name>PegTest::testSetToSpace</Name>
+    </Test>
   </SuccessfulTests>
   <Statistics>
-    <Tests>1</Tests>
+    <Tests>10</Tests>
     <FailuresTotal>0</FailuresTotal>
     <Errors>0</Errors>
     <Failures>0</Failures>
