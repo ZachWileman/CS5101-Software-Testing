@@ -8,7 +8,14 @@ LINKFLAGS= -lcppunit
 pegtest: PegTest.cpp $(OBJM)
 	$(CXX) $(CXXFLAGS) -o $@ PegTest.cpp $(OBJM) $(LINKFLAGS) $(LINKFLAGSLOG4) $(LIBLOG)
 
-# Default compile
+boardtest: BoardTest.cpp $(OBJM)
+	$(CXX) $(CXXFLAGS) -o $@ BoardTest.cpp $(OBJM) $(LINKFLAGS) $(LINKFLAGSLOG4) $(LIBLOG)
 
+.PHONY: clean
+
+clean:
+	rm *.o	
+
+# Default compile
 .cpp.o:
 	$(CXX) $(CXXFLAGS) -c $< -o $@
