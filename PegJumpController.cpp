@@ -5,7 +5,7 @@
 const int numGames = 1;
 const string gameNames[] = {"Peg Jump"};
 
-void PrintMenu(int gameScore[])
+void printMenu(int gameScore[])
 {
 	int menuChoice;
 
