@@ -15,26 +15,6 @@ void Peg::assignValues(char current_val, int layer, int row, int col) {
 char Peg::getPeg() {
 	return m_current_val;
 }
-/*
-// Updates peg to a new passed character
-void Peg::updatePeg(char current_val) {
-	m_current_val = current_val;
-}
-
-// returns true/false
-bool Peg::isValid() {
-	return m_valid_location;
-}
-
-//sets peg as a valid location i.e. true
-void Peg::setValidLocation() {
-	m_valid_location = true;
-}
-
-// Changes the current value to a Space since the value has disappeared from the board.
-void Peg::setToSpace() {
-	m_current_val = ' ';
-}
 
 //returns layer value i.e. row
 char Peg::getLayer() {
@@ -49,5 +29,26 @@ int Peg::getRow() {
 //returns column value
 int Peg::getCol() {
 	return m_col;
+}
+
+// Updates peg to a new passed character
+void Peg::updatePeg(char current_val) {
+	m_current_val = current_val;
+}
+
+/*
+// returns true/false
+bool Peg::isValid() {
+	return m_valid_location;
+}
+
+//sets peg as a valid location i.e. true
+void Peg::setValidLocation() {
+	m_valid_location = true;
+}
+
+// Changes the current value to a Space since the value has disappeared from the board.
+void Peg::setToSpace() {
+	m_current_val = ' ';
 }
 */

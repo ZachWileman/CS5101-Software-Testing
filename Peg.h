@@ -17,20 +17,20 @@ public:
 	void assignValues(char current_val, int layer, int row, int col);
 
 	char getPeg();
-/*
+
 	void updatePeg(char current_val);
-
-	bool isValid();
-
-	void setValidLocation();
-
-	void setToSpace();
 
 	char getLayer();
 
 	int getRow();
 
 	int getCol();
+/*
+	bool isValid();
+
+	void setValidLocation();
+
+	void setToSpace();
 */
 };
 #endif

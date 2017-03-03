@@ -33,6 +33,7 @@ public:
 
 protected:
     void testAssignValues(void);
+    //void testUpdatePeg(void);
 
 private:
     Peg *mTestObj;
@@ -40,13 +41,17 @@ private:
 
 //-----------------------------------------------------------------------------
 
-void
-PegTest::testAssignValues(void)
+void PegTest::testAssignValues(void)
 {
     Peg testPeg1;
     testPeg1.assignValues('A', 2, 2, 3);
     CPPUNIT_ASSERT(testPeg1.getPeg() == 'A');
+    CPPUNIT_ASSERT(testPeg1.getLayer() == 2);
+    CPPUNIT_ASSERT(testPeg1.getRow() == 2);
+    CPPUNIT_ASSERT(testPeg1.getCol() == 3);
 }
+
+
 
 void PegTest::setUp(void)
 {
