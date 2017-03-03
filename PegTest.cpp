@@ -25,6 +25,7 @@ class PegTest : public CppUnit::TestFixture
 {
     CPPUNIT_TEST_SUITE(PegTest);
     CPPUNIT_TEST(testAssignValues);
+    CPPUNIT_TEST(testUpdatePeg);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -33,7 +34,7 @@ public:
 
 protected:
     void testAssignValues(void);
-    //void testUpdatePeg(void);
+    void testUpdatePeg(void);
 
 private:
     Peg *mTestObj;
@@ -51,7 +52,12 @@ void PegTest::testAssignValues(void)
     CPPUNIT_ASSERT(testPeg1.getCol() == 3);
 }
 
-
+void testUpdatePeg(void)
+{
+	Peg testPeg;
+	testPeg.updatePeg('B');
+	CPPUNIT_ASSERT(testPeg.getPeg() == 'B');
+}
 
 void PegTest::setUp(void)
 {
