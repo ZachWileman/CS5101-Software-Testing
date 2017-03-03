@@ -37,10 +37,11 @@ public:
     void tearDown(void);
 
 protected:
-    void testSetupBoard(void);
     void testGetRow(void);
     void testGetCol(void);
     void testGetNumBoardPositions(void);
+    void testSetupBoard(void);
+
 private:
     Board *mTestObj;
 };
@@ -68,7 +69,11 @@ void BoardTest::testGetNumBoardPositions(void)
 void BoardTest::testSetupBoard(void)
 {
 	Board testBoard;
-	testBoard.setupBoard(1);
+	testBoard.setupBoard(2);
+	CPPUNIT_ASSERT(testBoard.getCol() == 13);
+	CPPUNIT_ASSERT(testBoard.getRow() == 7);
+	CPPUNIT_ASSERT(testBoard.getNumBoardPositions() == 15);
+	CPPUNIT_ASSERT(testBoard.testLocation(0,6,'*') == true);
 }
 
 void BoardTest::setUp(void)

@@ -23,8 +23,11 @@ public:
 
 	int getNumBoardPositions();
 
+	bool testLocation(int row, int col, char expectedVal);
+
 	// Constructor: Sets up board
 	void setupBoard (int difficulty);
+
 };
 
 #endif

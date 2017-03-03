@@ -15,6 +15,14 @@ int Board::getNumBoardPositions()
 	return m_numBoardPositions;
 }
 
+bool Board::testLocation(int row, int col, char expectedVal)
+{
+	if(board[row][col].getPeg() == expectedVal)
+		return true;
+	else
+		return false;
+}
+
 // Constructor: Sets up board
 void Board::setupBoard(int difficulty) {
 	// Set the row and col size based on difficulty
