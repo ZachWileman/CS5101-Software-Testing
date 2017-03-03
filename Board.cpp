@@ -336,3 +336,23 @@ bool Board::checkBoard() {
 
 	return false;
 }
+
+// Check Win
+// Function: Checks if the user has won the game
+bool Board::checkWin() {
+	int counter = 0;
+
+	for (int i = 0; i < m_row; i++) {
+		for (int j = 0; j < m_col; j++) {
+			for (int k = 0; k < m_numBoardPositions; k++) {
+				if (board[i][j].getPeg() == boardPositions[k])
+					counter++;
+			}
+		}
+	}
+
+	if (counter > 1)
+		return false;
+	else
+		return true;
+}

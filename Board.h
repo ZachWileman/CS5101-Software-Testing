@@ -7,19 +7,20 @@
 #include <cstdlib>
 
 const char boardPerimeter = '*';
-const char boardPositions[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U'};
+const char boardPositions[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
+		'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U' };
 const char SPACE = ' ';
 
-class Board
-{
+class Board {
 private:
 	Peg board[8][15]; //Creates the max board size possible
 	int m_row;
 	int m_col;
 	int m_numBoardPositions;
+
 public:
 	// Default constructor
-	Board(): m_row(-1), m_col(-1), m_numBoardPositions(-1) {}
+	Board() : m_row(-1), m_col(-1), m_numBoardPositions(-1) {}
 
 	int getCol();
 
@@ -30,7 +31,7 @@ public:
 	bool testLocation(int row, int col, char expectedVal);
 
 	// Sets up board dependent on difficulty level
-	void setupBoard (int difficulty);
+	void setupBoard(int difficulty);
 
 	// Update Function
 	// Function: This function updates the board after the user makes a move
@@ -53,6 +54,10 @@ public:
 	//			true: there are moves left
 	//			flase: there are no moves left
 	bool checkBoard();
+
+	// Check Win
+	// Function: Checks if the user has won the game
+	bool checkWin();
 };
 
 #endif
