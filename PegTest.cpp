@@ -30,6 +30,10 @@ class PegTest : public CppUnit::TestFixture
     CPPUNIT_TEST(testGetLayer);
     CPPUNIT_TEST(testGetRow);
     CPPUNIT_TEST(testGetColumn);
+    CPPUNIT_TEST(testIsValid);
+    CPPUNIT_TEST(testSetInvalidLocation);
+    CPPUNIT_TEST(testSetValidLocation);
+    CPPUNIT_TEST(testSetToSpace);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -43,6 +47,10 @@ protected:
     void testGetLayer(void);
     void testGetRow(void);
     void testGetColumn(void);
+    void testIsValid(void);
+    void testSetValidLocation(void);
+    void testSetToSpace(void);
+    void testSetInvalidLocation(void);
 
 private:
     Peg *mTestObj;
@@ -89,6 +97,33 @@ void PegTest::testUpdatePeg(void)
 	Peg testPeg;
 	testPeg.updatePeg('B');
 	CPPUNIT_ASSERT(testPeg.getPeg() == 'B');
+}
+
+void testIsValid(void)
+{
+	Peg testPeg;
+	CPPUNIT_ASSERT(false == testPeg.isValid());
+}
+
+void testSetValidLocation(void)
+{
+	Peg testPeg;
+	testPeg.setValidLocation();
+	CPPUNIT_ASSERT(testPeg.isValid() == true);
+}
+
+void testSetInvalidLocation(void)
+{
+	Peg testPeg;
+	testPeg.setInvalidLocation();
+	CPPUNIT_ASSERT(testPeg.isValid() == false);
+}
+
+void testSetToSpace(void)
+{
+	Peg testPeg;
+	testPeg.setToSpace();
+	CPPUNIT_ASSERT(testPeg.getPeg() == ' ');
 }
 
 void PegTest::setUp(void)

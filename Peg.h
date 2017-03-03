@@ -25,11 +25,13 @@ public:
 	int getRow();
 
 	int getCol();
-/*
+
 	void setValidLocation();
 
 	bool isValid();
 
-	void setToSpace();*/
+	void setInvalidLocation();
+
+	void setToSpace();
 };
 #endif

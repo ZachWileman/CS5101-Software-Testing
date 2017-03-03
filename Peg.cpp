@@ -35,7 +35,7 @@ int Peg::getCol() {
 void Peg::updatePeg(char current_val) {
 	m_current_val = current_val;
 }
-/*
+
 // returns true/false
 bool Peg::isValid() {
 	return m_valid_location;
@@ -46,8 +46,12 @@ void Peg::setValidLocation() {
 	m_valid_location = true;
 }
 
+void Peg::setInvalidLocation(){
+	m_valid_location = false;
+}
+
 // Changes the current value to a Space since the value has disappeared from the board.
 void Peg::setToSpace() {
 	m_current_val = ' ';
 }
-*/
+
