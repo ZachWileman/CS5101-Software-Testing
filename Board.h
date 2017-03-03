@@ -34,6 +34,11 @@ public:
 	// Function: This function updates the board after the user makes a move
 	void updateBoard(char input1, char input2);
 
+	// Check Move
+	// Function: This function checks to see if the user input a valid move
+	// Returns: bool value that returns True if the user input a valid move
+	bool checkMove(char input1, char input2);
+
 	// Clears the current board
 	void clearBoard();
 

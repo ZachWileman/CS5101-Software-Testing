@@ -176,3 +176,128 @@ void Board::updateBoard(char input1, char input2) {
 		}
 	}
 }
+
+// Check Move
+// Function: This function checks to see if the user input a valid move
+// Returns: bool value that returns True if the user input a valid move
+bool Board::checkMove(char input1, char input2) {
+	bool input1_valid = false;
+	bool input2_valid = false;
+	Peg peg1, peg2, tempPeg;
+	int layerDiff, col_diff, row_diff;
+
+	if (input2 == SPACE) {
+		input2_valid = true;
+
+		for (int i = 0; i < m_numBoardPositions; i++) {
+			if (input1 == boardPositions[i])
+				input1_valid = true;
+		}
+	}
+
+	else {
+		// Checks if input1 and input2 are valid characters
+		for (int i = 0; i < m_numBoardPositions; i++) {
+			if (input1 == boardPositions[i])
+				input1_valid = true;
+			if (input2 == boardPositions[i])
+				input2_valid = true;
+		}
+
+		if (input1_valid && input2_valid) {
+			// Reset for more testing
+			input1_valid = false;
+			input2_valid = false;
+
+			// Grabs peg objects
+			for (int i = 0; i < m_row; i++) {
+				for (int j = 0; j < m_col; j++) {
+					if (input1 == board[i][j].getPeg())
+						peg1 = board[i][j];
+					else if (input2 == board[i][j].getPeg())
+						peg2 = board[i][j];
+				}
+			}
+
+			// Check if the pegs are in the same layer or in adjacent layers
+			layerDiff = abs(peg1.getLayer() - peg2.getLayer());
+
+			switch (layerDiff) {
+			case 0:
+				col_diff = peg1.getCol() - peg2.getCol();
+
+				if (abs(col_diff) == 2) {
+					if (col_diff == -2) {
+						tempPeg = board[peg2.getRow()][peg2.getCol() + 2];
+						if (tempPeg.getPeg() == SPACE && tempPeg.isValid()) {
+							input1_valid = true;
+							input2_valid = true;
+						}
+					} else {
+						tempPeg = board[peg2.getRow()][peg2.getCol() - 2];
+						if (tempPeg.getPeg() == SPACE && tempPeg.isValid()) {
+							input1_valid = true;
+							input2_valid = true;
+						}
+					}
+				}
+				break;
+
+			case 1:
+				col_diff = peg1.getCol() - peg2.getCol();
+				row_diff = peg1.getRow() - peg2.getRow();
+
+				if (abs(row_diff) == 1 && abs(col_diff) == 1) {
+					if (row_diff == 1) {
+						if (col_diff == 1) {
+							tempPeg =
+									board[peg2.getRow() - 1][peg2.getCol() - 1];
+							if (tempPeg.getPeg() == SPACE
+									&& tempPeg.isValid()) {
+								input1_valid = true;
+								input2_valid = true;
+							}
+						} else {
+							tempPeg =
+									board[peg2.getRow() - 1][peg2.getCol() + 1];
+							if (tempPeg.getPeg() == SPACE
+									&& tempPeg.isValid()) {
+								input1_valid = true;
+								input2_valid = true;
+							}
+						}
+					} else {
+						if (col_diff == 1) {
+							tempPeg =
+									board[peg2.getRow() + 1][peg2.getCol() - 1];
+							if (tempPeg.getPeg() == SPACE
+									&& tempPeg.isValid()) {
+								input1_valid = true;
+								input2_valid = true;
+							}
+						} else {
+							tempPeg =
+									board[peg2.getRow() + 1][peg2.getCol() + 1];
+							if (tempPeg.getPeg() == SPACE
+									&& tempPeg.isValid()) {
+								input1_valid = true;
+								input2_valid = true;
+							}
+						}
+					}
+				}
+
+				break;
+
+			default:
+				break;
+			}
+		}
+	}
+
+	if (input1_valid && input2_valid)
+		return true;
+	else
+		return false;
+
+}
