@@ -31,3 +31,10 @@ void PegJumpView::printScores(int numGames, string gameNames[], int gameScore[])
 	for(int i = 0; i < numGames; i++)
 		cout << gameNames[i] << " Score: " << gameScore[i] << endl;
 }
+
+void PegJumpView::selectDifficulty(){
+	cout << "Please enter a difficulty level (select the number)" << endl;
+	cout << "1.) Easy" << endl;
+	cout << "2.) Medium" << endl;
+	cout << "3.) Hard" << endl;
+}

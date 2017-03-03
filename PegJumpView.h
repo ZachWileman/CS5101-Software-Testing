@@ -23,6 +23,8 @@ public:
 
 	void printScores(int numGames, string gameNames[], int gameScore[]);
 
+	void selectDifficulty();
+
 };
 
 #endif
