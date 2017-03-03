@@ -32,6 +32,7 @@ class BoardTest: public CppUnit::TestFixture {
 	CPPUNIT_TEST (testUpdateBoard);
 	CPPUNIT_TEST (testCheckMove);
 	CPPUNIT_TEST (testClearBoard);
+	CPPUNIT_TEST (testRemainingPegs);
 	CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -46,6 +47,7 @@ protected:
 	void testUpdateBoard(void);
 	void testCheckMove(void);
 	void testClearBoard(void);
+	void testRemainingPegs(void);
 private:
 	Board *mTestObj;
 };
@@ -95,6 +97,13 @@ void BoardTest::testClearBoard(void){
 	CPPUNIT_ASSERT(testBoard.testLocation(2, 6, ' ') == true);
 }
 
+void BoardTest::testRemainingPegs(void){
+	Board testBoard;
+	vector<Peg> remainingPegs;
+	testBoard.setupBoard(1);
+	remainingPegs = testBoard.remainingPegs();
+	CPPUNIT_ASSERT(remainingPegs.size() == 10);
+}
 void BoardTest::setUp(void) {
 	mTestObj = new Board();
 }

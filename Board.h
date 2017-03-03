@@ -3,6 +3,8 @@
 
 #include "Peg.h"
 #include <cmath>
+#include <vector>
+#include <cstdlib>
 
 const char boardPerimeter = '*';
 const char boardPositions[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U'};
@@ -42,6 +44,8 @@ public:
 	// Clears the current board
 	void clearBoard();
 
+	// Returns: the remaining pegs inside the calling object's Board
+	std::vector<Peg> remainingPegs();
 };
 
 #endif

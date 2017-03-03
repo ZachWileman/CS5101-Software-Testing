@@ -301,3 +301,20 @@ bool Board::checkMove(char input1, char input2) {
 		return false;
 
 }
+
+// Returns: the remaining pegs inside the calling object's Board
+vector<Peg> Board::remainingPegs()
+{
+	vector<Peg> currentPegs;
+
+	for (int i = 0; i < m_row; i++)
+	{
+		for (int j = 0; j < m_col; j++)
+		{
+			if (board[i][j].getPeg() != SPACE && board[i][j].isValid())
+				currentPegs.push_back(board[i][j]);
+		}
+	}
+
+	return currentPegs;
+}
