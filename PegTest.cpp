@@ -26,6 +26,10 @@ class PegTest : public CppUnit::TestFixture
     CPPUNIT_TEST_SUITE(PegTest);
     CPPUNIT_TEST(testAssignValues);
     CPPUNIT_TEST(testUpdatePeg);
+    CPPUNIT_TEST(testGetPeg);
+    CPPUNIT_TEST(testGetLayer);
+    CPPUNIT_TEST(testGetRow);
+    CPPUNIT_TEST(testGetColumn);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -35,12 +39,40 @@ public:
 protected:
     void testAssignValues(void);
     void testUpdatePeg(void);
+    void testGetPeg(void);
+    void testGetLayer(void);
+    void testGetRow(void);
+    void testGetColumn(void);
 
 private:
     Peg *mTestObj;
 };
 
 //-----------------------------------------------------------------------------
+
+void PegTest::testGetPeg(void)
+{
+	Peg testPeg;
+	CPPUNIT_ASSERT(testPeg.getPeg() == ' ');
+}
+
+void PegTest::testGetLayer(void)
+{
+	Peg testPeg;
+	CPPUNIT_ASSERT(testPeg.getLayer() == -1);
+}
+
+void PegTest::testGetRow(void)
+{
+	Peg testPeg;
+	CPPUNIT_ASSERT(testPeg.getRow() == -1);
+}
+
+void PegTest::testGetColumn(void)
+{
+	Peg testPeg;
+	CPPUNIT_ASSERT(testPeg.getCol == -1);
+}
 
 void PegTest::testAssignValues(void)
 {
@@ -52,7 +84,7 @@ void PegTest::testAssignValues(void)
     CPPUNIT_ASSERT(testPeg1.getCol() == 3);
 }
 
-void testUpdatePeg(void)
+void PegTest::testUpdatePeg(void)
 {
 	Peg testPeg;
 	testPeg.updatePeg('B');
