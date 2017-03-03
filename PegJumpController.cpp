@@ -1,6 +1,8 @@
 //Group Members: Alfonso Miguel Santos-Tankia and Zachary Wileman
 #include "PegJumpController.h"
 #include "PegJumpView.h"
+#include <iostream>
+using namespace std;
 
 const int numGames = 1;
 
