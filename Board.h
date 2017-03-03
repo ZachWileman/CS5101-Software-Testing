@@ -2,9 +2,11 @@
 #define BOARD_H
 
 #include "Peg.h"
+#include <cmath>
 
 const char boardPerimeter = '*';
 const char boardPositions[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U'};
+const char SPACE = ' ';
 
 class Board
 {
@@ -25,8 +27,15 @@ public:
 
 	bool testLocation(int row, int col, char expectedVal);
 
-	// Constructor: Sets up board
+	// Sets up board dependent on difficulty level
 	void setupBoard (int difficulty);
+
+	// Update Function
+	// Function: This function updates the board after the user makes a move
+	void updateBoard(char input1, char input2);
+
+	// Clears the current board
+	void clearBoard();
 
 };
 
