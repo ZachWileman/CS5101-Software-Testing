@@ -1,8 +1,5 @@
 //Group Members: Alfonso Miguel Santos-Tankia and Zachary Wileman
-#include <iostream>
 #include "Peg.h"
-
-using namespace std;
 
 // Parameters:
 //			  current_val: what the value of the current peg is
@@ -14,6 +11,11 @@ void Peg::assignValues(char current_val, int layer, int row, int col) {
 	m_col = col;
 }
 
+//returns peg character
+char Peg::getPeg() {
+	return m_current_val;
+}
+/*
 // Updates peg to a new passed character
 void Peg::updatePeg(char current_val) {
 	m_current_val = current_val;
@@ -34,11 +36,6 @@ void Peg::setToSpace() {
 	m_current_val = ' ';
 }
 
-//returns peg character
-char Peg::getPeg() {
-	return m_current_val;
-}
-
 //returns layer value i.e. row
 char Peg::getLayer() {
 	return m_layer;
@@ -53,3 +50,4 @@ int Peg::getRow() {
 int Peg::getCol() {
 	return m_col;
 }
+*/

@@ -1,6 +1,6 @@
 //Group Members: Alfonso Miguel Santos-Tankia and Zachary Wileman
-#ifndef Peg_h
-#define Peg_h
+#ifndef PEG_H
+#define PEG_H
 
 class Peg
 {
@@ -16,6 +16,8 @@ public:
 
 	void assignValues(char current_val, int layer, int row, int col);
 
+	char getPeg();
+/*
 	void updatePeg(char current_val);
 
 	bool isValid();
@@ -24,12 +26,11 @@ public:
 
 	void setToSpace();
 
-	char getPeg();
-
 	char getLayer();
 
 	int getRow();
 
 	int getCol();
+*/
 };
 #endif
