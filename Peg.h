@@ -26,11 +26,10 @@ public:
 
 	int getCol();
 /*
-	bool isValid();
-
 	void setValidLocation();
 
-	void setToSpace();
-*/
+	bool isValid();
+
+	void setToSpace();*/
 };
 #endif

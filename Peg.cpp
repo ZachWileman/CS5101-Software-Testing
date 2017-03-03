@@ -35,7 +35,6 @@ int Peg::getCol() {
 void Peg::updatePeg(char current_val) {
 	m_current_val = current_val;
 }
-
 /*
 // returns true/false
 bool Peg::isValid() {

@@ -71,7 +71,7 @@ void PegTest::testGetRow(void)
 void PegTest::testGetColumn(void)
 {
 	Peg testPeg;
-	CPPUNIT_ASSERT(testPeg.getCol == -1);
+	CPPUNIT_ASSERT(testPeg.getCol() == -1);
 }
 
 void PegTest::testAssignValues(void)
