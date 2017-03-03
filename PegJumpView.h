@@ -32,6 +32,12 @@ public:
 	void solutionFound();
 
 	void noSolution();
+
+	void win();
+
+	void lose();
+
+	void cumScore(int gameScore[], int gameSelected);
 };
 
 #endif

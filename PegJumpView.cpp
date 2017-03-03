@@ -56,3 +56,15 @@ void PegJumpView::solutionFound(){
 void PegJumpView::noSolution(){
 	cout << endl << "No solution found" << endl;
 }
+
+void PegJumpView::win(){
+	cout << "You win!" << endl << endl;
+}
+
+void PegJumpView::lose(){
+	cout << "You lose!" << endl << endl;
+}
+
+void PegJumpView::cumScore(int gameScore[], int gameSelected){
+	cout << "Cumulative score: " << gameScore[gameSelected-1] << endl;
+}
