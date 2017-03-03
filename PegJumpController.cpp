@@ -46,7 +46,7 @@ int main()
       }
 
       if (gameRestart == "9")
-        printMenu(gameScore);
+        View.printMenu(gameScore);
 
     } while (gameRestart == "9");
 
