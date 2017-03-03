@@ -1,6 +1,7 @@
 //Group Members: Alfonso Miguel Santos-Tankia and Zachary Wileman
 #include "PegJumpController.h"
 #include "PegJumpView.h"
+#include "Board.h"
 
 const int numGames = 1;
 const string gameNames[] = {"Peg Jump"};
@@ -44,7 +45,13 @@ int main()
   int gameScore[numGames] = {0};
   int gameSelected;
   string gameRestart;
+<<<<<<< Updated upstream
   int difficulty;
+=======
+  char input1 = SPACE, input2 = SPACE;
+	bool invalidMove;
+  Board pegBoard;
+>>>>>>> Stashed changes
 
   View.printStart();
 
@@ -68,7 +75,6 @@ int main()
 
 		} while (gameSelected != 1);
 
-    /////////////
     switch (gameSelected)
 		{
 			case 1:
@@ -94,6 +100,37 @@ int main()
     }
     /////////////
 
+    // Resets peg board
+    pegBoard.setupBoard(difficulty);
+
+    do
+    {
+      pegBoard.printBoard();
+      View.firstPeg();
+      invalidMove = false;
+      input2 = SPACE;
+
+      if (!(cin >> input1))
+      {
+        cin.clear();
+        cin.ignore();
+      }
+
+      if (input1 == '9')
+      {
+        printMenu(gameScore);
+        invalidMove = true;
+      }
+
+      else if (!pegBoard.checkMove(input1, input2))
+      {
+        invalidMove = true;
+        View.invalidMove();
+      }
+
+    } while (invalidMove);
+
+    /////////////
     do
     {
       View.playAgain();
