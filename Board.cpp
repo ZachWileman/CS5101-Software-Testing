@@ -303,18 +303,36 @@ bool Board::checkMove(char input1, char input2) {
 }
 
 // Returns: the remaining pegs inside the calling object's Board
-vector<Peg> Board::remainingPegs()
-{
+vector<Peg> Board::remainingPegs() {
 	vector<Peg> currentPegs;
 
-	for (int i = 0; i < m_row; i++)
-	{
-		for (int j = 0; j < m_col; j++)
-		{
+	for (int i = 0; i < m_row; i++) {
+		for (int j = 0; j < m_col; j++) {
 			if (board[i][j].getPeg() != SPACE && board[i][j].isValid())
 				currentPegs.push_back(board[i][j]);
 		}
 	}
 
 	return currentPegs;
+}
+
+// Check Board
+// Function: This function tests to see if any moves are still available to the user
+// Returns: bool value representing whether or not there are still moves to make on the board
+//			true: there are moves left
+//			false: there are no moves left
+bool Board::checkBoard() {
+	vector<Peg> currentPegs = remainingPegs();
+
+	for (int i = 0; i < currentPegs.size(); i++) {
+		for (int j = (i + 1); j < currentPegs.size(); j++) {
+			if (checkMove(currentPegs[i].getPeg(), currentPegs[j].getPeg()))
+				return true;
+			else if (checkMove(currentPegs[j].getPeg(),
+					currentPegs[i].getPeg()))
+				return true;
+		}
+	}
+
+	return false;
 }

@@ -46,6 +46,13 @@ public:
 
 	// Returns: the remaining pegs inside the calling object's Board
 	std::vector<Peg> remainingPegs();
+
+	// Check Board
+	// Function: This function tests to see if any moves are still available to the user
+	// Returns: bool value representing whether or not there are still moves to make on the board
+	//			true: there are moves left
+	//			flase: there are no moves left
+	bool checkBoard();
 };
 
 #endif
