@@ -5,7 +5,7 @@ boardtest:
 	g++ -o boardtest Peg.cpp Board.cpp BoardTest.cpp -lcppunit
 
 main:
-	g++ PegJumpController.cpp PegJumpView.cpp
+	g++ main PegJumpController.cpp PegJumpView.cpp
 
 .PHONY: clean
 
