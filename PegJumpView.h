@@ -23,6 +23,8 @@ public:
 
 	void printScores(int numGames, const string gameNames[], int gameScore[]);
 
+	void firstPeg();
+
 	void selectDifficulty();
 
 };

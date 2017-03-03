@@ -33,8 +33,12 @@ void PegJumpView::printScores(int numGames, const string gameNames[], int gameSc
 }
 
 void PegJumpView::selectDifficulty(){
-	cout << "Please enter a difficulty level (select the number)" << endl;
+	cout << endl <<"Please enter a difficulty level (select the number)" << endl;
 	cout << "1.) Easy" << endl;
 	cout << "2.) Medium" << endl;
 	cout << "3.) Hard" << endl;
+}
+
+void PegJumpView::firstPeg(){
+	cout << "Please enter the fist peg to remove on the board by entering a letter corresponding to the peg board." << endl;
 }
