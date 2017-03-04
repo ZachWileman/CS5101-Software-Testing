@@ -2,6 +2,8 @@
 #ifndef PegJumpModel_h
 #define PegJumpModel_h
 
+#include "Board.h"
+
 class PegJumpModel
 {
 public:
