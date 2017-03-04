@@ -2,6 +2,7 @@
 #include "PegJumpController.h"
 #include "PegJumpView.h"
 #include "Board.h"
+#include "PegJumpModel.h"
 
 const int numGames = 1;
 const string gameNames[] = {"Peg Jump"};
@@ -48,6 +49,7 @@ int main()
   int difficulty;
   char input1 = SPACE, input2 = SPACE;
   vector<Peg> pegRemainder;
+  vector<char> solutionList;
 	bool invalidMove;
   Board pegBoard;
 
@@ -145,8 +147,7 @@ int main()
 
           if (input1 == '8')
           {
-            // Implement Autosolver
-            if (true)
+            if (autoSolver(pegBoard, pegRemainder, solutionList))
               View.solutionFound();
             else
               View.noSolution();
