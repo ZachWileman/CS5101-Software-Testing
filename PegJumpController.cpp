@@ -43,6 +43,7 @@ void printMenu(int gameScore[])
 int main()
 {
   PegJumpView View;
+  PegJumpModel Model;
   int gameScore[numGames] = {0};
   int gameSelected;
   string gameRestart;
@@ -147,7 +148,7 @@ int main()
 
           if (input1 == '8')
           {
-            if (autoSolver(pegBoard, pegRemainder, solutionList))
+            if (Model.autoSolver(pegBoard, pegRemainder, solutionList))
               View.solutionFound();
             else
               View.noSolution();
@@ -191,8 +192,8 @@ int main()
 
       View.cumScore(gameScore, gameSelected);
       pegBoard.clearBoard();
-      //solutionList.clear();
-      //pegRemainder.clear();
+      solutionList.clear();
+      pegRemainder.clear();
       break;
     }
 
