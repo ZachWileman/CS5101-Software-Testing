@@ -1,3 +1,4 @@
+
 pegtest:
 	g++ -o pegtest Peg.cpp PegTest.cpp -lcppunit
 
@@ -6,9 +7,6 @@ boardtest:
 
 main:
 	g++ -o main PegJumpController.cpp PegJumpView.cpp Board.cpp Peg.cpp
-	
-test:
-	g++ -o test regressiontest.cpp Board.cpp Peg.cpp -lcppunit
 
 .PHONY: clean
 
