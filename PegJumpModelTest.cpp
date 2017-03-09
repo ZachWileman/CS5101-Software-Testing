@@ -45,13 +45,16 @@ void PegJumpModelTest::testAutoSolver(void){
 	PegJumpModel Model;
 	vector<Peg> remPegs;
 	vector<char> solutionList;
-	char expectedList[16] = {'G', 'D', 'A', 'G', 'F', 'C', 'A', 'E', 'J', 'A', 'F', 'J', 'H', 'I', 'H', 'F'};
 
 	testBoard.setupBoard(1);
+	remPegs = testBoard.remainingPegs();
+	char expectedList[16] = {'G', 'D', 'A', 'G', 'F', 'C', 'A', 'E', 'J', 'A', 'F', 'J', 'H', 'I', 'H', 'F'};
+
 	testBoard.updateBoard('B', SPACE);
 	CPPUNIT_ASSERT(Model.autoSolver(testBoard, remPegs, solutionList) == true);
+
 	for(int i = 0; i < solutionList.size(); i++)
-		CPPUNIT_ASSERT( solutionList[i] == expectedList[i]);
+		CPPUNIT_ASSERT(solutionList[i] == expectedList[i]);
 }
 
 void PegJumpModelTest::setUp(void) {

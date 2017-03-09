@@ -8,6 +8,7 @@ class PegJumpModel
 {
 public:
   PegJumpModel() {}
+
   bool autoSolver(Board tempBoard, vector<Peg> remainingPegs, vector<char> &solutionList);
 
 };
