@@ -30,7 +30,7 @@ public:
 
 	void twoPeg();
 
-	void solutionFound(vector<char> &solutionList);
+	void solutionFound(std::vector<char> &solutionList);
 
 	void noSolution();
 
