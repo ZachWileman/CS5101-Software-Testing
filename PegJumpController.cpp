@@ -65,6 +65,11 @@ bool autoSolver(Board tempBoard, vector<Peg> remainingPegs, vector<char> &soluti
         		cout << newSolutions[i] << " " << newSolutions[i+1] << endl;
 
           solutionList = newSolutions;
+
+          cout << endl << "The following moves, in order, are the solution to the current Peg Board." << endl << endl;
+        	for(int i = 0; i < solutionList.size(); i+=2)
+        		cout << solutionList[i] << " " << solutionList[i+1] << endl;
+
           return true;
 				}
 				else
