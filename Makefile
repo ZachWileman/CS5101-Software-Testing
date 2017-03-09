@@ -6,9 +6,12 @@ boardtest:
 	g++ -o boardtest Peg.cpp Board.cpp BoardTest.cpp -lcppunit
 
 main:
-	g++ -o main PegJumpController.cpp PegJumpView.cpp Board.cpp Peg.cpp
+	g++ -o main PegJumpController.cpp PegJumpView.cpp PegJumpModel.cpp Board.cpp Peg.cpp
+
+modeltest:
+	g++ -o modeltest Peg.cpp Board.cpp PegJumpModelTest.cpp PegJumpModel.cpp -lcppunit
 
 .PHONY: clean
 
 clean:
-	rm boardtest pegtest main test 2>/dev/null || true	
+	rm boardtest pegtest main modeltest 2>/dev/null || true	
