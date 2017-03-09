@@ -49,7 +49,7 @@ void PegJumpView::twoPeg(){
 		 <<	"you would like to automatically solve your game, enter the number 8" << endl;
 }
 
-void PegJumpView::solutionFound(std::vector<char> &solutionList){
+void PegJumpView::solutionFound(vector<char> &solutionList){
 	cout << endl << "The following moves, in order, are the solution to the current Peg Board." << endl << endl;
 	for(int i = 0; i < solutionList.size(); i+=2)
 		cout << solutionList[i] << " " << solutionList[i+1] << endl;

@@ -41,7 +41,7 @@ void printMenu(int gameScore[])
 
 // Function: Autosolve's the peg jump game at whatever state the passed in "tempBoard" is at
 // Retutns: bool value that is true if there was a solution found, false if not
-bool autoSolver(Board tempBoard, vector<Peg> remainingPegs, std::vector<char> &solutionList)
+bool autoSolver(Board tempBoard, vector<Peg> remainingPegs, vector<char> &solutionList)
 {
 	for (int i = 0; i < remainingPegs.size(); i++)
 	{
@@ -75,8 +75,18 @@ bool autoSolver(Board tempBoard, vector<Peg> remainingPegs, std::vector<char> &s
 				else
 				{
 					if (autoSolver(newBoard, newPegs, newSolutions))
-						return true;
-				}
+					{
+            cout << endl << "SolutionList: " << endl << endl;
+          	for(int i = 0; i < solutionList.size(); i+=2)
+          		cout << solutionList[i] << " " << solutionList[i+1] << endl;
+
+            cout << endl << "newSolutions: " << endl << endl;
+          	for(int i = 0; i < newSolutions.size(); i+=2)
+          		cout << newSolutions[i] << " " << newSolutions[i+1] << endl;
+
+            return true;
+          }
+        }
 			}
 
 			if (tempBoard.checkMove(remainingPegs[j].getPeg(), remainingPegs[i].getPeg()))
@@ -98,7 +108,17 @@ bool autoSolver(Board tempBoard, vector<Peg> remainingPegs, std::vector<char> &s
 				else
 				{
 					if (autoSolver(newBoard, newPegs, newSolutions))
-						return true;
+          {
+            cout << endl << "SolutionList: " << endl << endl;
+          	for(int i = 0; i < solutionList.size(); i+=2)
+          		cout << solutionList[i] << " " << solutionList[i+1] << endl;
+
+            cout << endl << "newSolutions: " << endl << endl;
+          	for(int i = 0; i < newSolutions.size(); i+=2)
+          		cout << newSolutions[i] << " " << newSolutions[i+1] << endl;
+
+            return true;
+          }
 				}
 			}
 		}
