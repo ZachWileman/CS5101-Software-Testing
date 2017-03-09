@@ -70,6 +70,10 @@ bool autoSolver(Board tempBoard, vector<Peg> remainingPegs, vector<char> &soluti
         	for(int i = 0; i < solutionList.size(); i+=2)
         		cout << solutionList[i] << " " << solutionList[i+1] << endl;
 
+          solutionList.clear();
+          solutionList.push_back('A');
+          solutionList.push_back('B');
+
           return true;
 				}
 				else
