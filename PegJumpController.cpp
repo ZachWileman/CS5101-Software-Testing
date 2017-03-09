@@ -43,6 +43,8 @@ void printMenu(int gameScore[])
 // Retutns: bool value that is true if there was a solution found, false if not
 bool autoSolver(Board tempBoard, vector<Peg> remainingPegs, vector<char> &solutionList)
 {
+  static vector<char> finalSolution;
+
 	for (int i = 0; i < remainingPegs.size(); i++)
 	{
 		for (int j = i+1; j < remainingPegs.size(); j++)
@@ -64,7 +66,7 @@ bool autoSolver(Board tempBoard, vector<Peg> remainingPegs, vector<char> &soluti
         	for(int i = 0; i < newSolutions.size(); i+=2)
         		cout << newSolutions[i] << " " << newSolutions[i+1] << endl;
 
-          solutionList = newSolutions;
+          finalSolution = newSolutions;
 
           cout << endl << "The following moves, in order, are the solution to the current Peg Board." << endl << endl;
         	for(int i = 0; i < solutionList.size(); i+=2)
@@ -75,15 +77,8 @@ bool autoSolver(Board tempBoard, vector<Peg> remainingPegs, vector<char> &soluti
 				else
 				{
 					if (autoSolver(newBoard, newPegs, newSolutions))
-					{
-            cout << endl << "SolutionList: " << endl << endl;
-          	for(int i = 0; i < solutionList.size(); i+=2)
-          		cout << solutionList[i] << " " << solutionList[i+1] << endl;
-
-            cout << endl << "newSolutions: " << endl << endl;
-          	for(int i = 0; i < newSolutions.size(); i+=2)
-          		cout << newSolutions[i] << " " << newSolutions[i+1] << endl;
-
+          {
+            solutionList = finalSolution;
             return true;
           }
         }
@@ -109,14 +104,7 @@ bool autoSolver(Board tempBoard, vector<Peg> remainingPegs, vector<char> &soluti
 				{
 					if (autoSolver(newBoard, newPegs, newSolutions))
           {
-            cout << endl << "SolutionList: " << endl << endl;
-          	for(int i = 0; i < solutionList.size(); i+=2)
-          		cout << solutionList[i] << " " << solutionList[i+1] << endl;
-
-            cout << endl << "newSolutions: " << endl << endl;
-          	for(int i = 0; i < newSolutions.size(); i+=2)
-          		cout << newSolutions[i] << " " << newSolutions[i+1] << endl;
-
+            solutionList = finalSolution;
             return true;
           }
 				}
