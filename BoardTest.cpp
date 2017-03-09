@@ -120,7 +120,16 @@ void BoardTest::testCheckBoard(void){
 void BoardTest::testCheckWin(void){
 	Board testBoard;
 	testBoard.setupBoard(1);
-	CPPUNIT_ASSERT(testBoard.checkWin() == false);
+	testBoard.updateBoard('B', SPACE);
+	testBoard.updateBoard('G', 'D');
+	testBoard.updateBoard('A', 'G');
+	testBoard.updateBoard('F', 'C');
+	testBoard.updateBoard('A', 'E');
+	testBoard.updateBoard('J', 'A');
+	testBoard.updateBoard('F', 'J');
+	testBoard.updateBoard('H', 'I');
+	testBoard.updateBoard('H', 'F');
+	CPPUNIT_ASSERT(testBoard.checkWin() == true);
 }
 
 void BoardTest::setUp(void) {
