@@ -61,7 +61,10 @@ bool autoSolver(Board tempBoard, vector<Peg> remainingPegs, vector<char> &soluti
 				newPegs = newBoard.remainingPegs();
 
 				if (newBoard.checkWin())
+				{
+          finalSolution = newSolutions;
           return true;
+				}
 				else
 				{
 					if (autoSolver(newBoard, newPegs, newSolutions))
@@ -84,7 +87,10 @@ bool autoSolver(Board tempBoard, vector<Peg> remainingPegs, vector<char> &soluti
 				newPegs = newBoard.remainingPegs();
 
 				if (newBoard.checkWin())
+				{
+          finalSolution = newSolutions;
           return true;
+				}
 				else
 				{
 					if (autoSolver(newBoard, newPegs, newSolutions))
