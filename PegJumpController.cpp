@@ -41,7 +41,7 @@ void printMenu(int gameScore[])
 
 // Function: Autosolve's the peg jump game at whatever state the passed in "tempBoard" is at
 // Retutns: bool value that is true if there was a solution found, false if not
-bool autoSolver(Board tempBoard, vector<Peg> remainingPegs, vector<char> solutionList)
+bool autoSolver(Board tempBoard, vector<Peg> remainingPegs, vector<char> &solutionList)
 {
 	for (int i = 0; i < remainingPegs.size(); i++)
 	{
@@ -60,11 +60,8 @@ bool autoSolver(Board tempBoard, vector<Peg> remainingPegs, vector<char> solutio
 
 				if (newBoard.checkWin())
 				{
-					cout << endl << "The following moves, in order, are the solution to the current Peg Board." << endl << endl;
-					for(int i = 0; i < newSolutions.size(); i+=2)
-						cout << newSolutions[i] << " " << newSolutions[i+1] << endl;
-
-					return true;
+          solutionList = newSolutions;
+          return true;
 				}
 				else
 				{
@@ -86,11 +83,8 @@ bool autoSolver(Board tempBoard, vector<Peg> remainingPegs, vector<char> solutio
 
 				if (newBoard.checkWin())
 				{
-					cout << endl << "The following moves, in order, are the solution to the current Peg Board." << endl << endl;
-					for(int i = 0; i < newSolutions.size(); i+=2)
-						cout << newSolutions[i] << " " << newSolutions[i+1] << endl;
-
-					return true;
+          solutionList = newSolutions;
+          return true;
 				}
 				else
 				{
@@ -212,7 +206,7 @@ int main()
           if (input1 == '8')
           {
             if (autoSolver(pegBoard, pegRemainder, solutionList))
-              View.solutionFound();
+                View.solutionFound(solutionList);
             else
               View.noSolution();
 

@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <vector>
 using namespace std;
 
 class PegJumpView {
@@ -29,7 +30,7 @@ public:
 
 	void twoPeg();
 
-	void solutionFound();
+	void solutionFound(const vector<char> &solutionList);
 
 	void noSolution();
 
