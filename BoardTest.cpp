@@ -86,20 +86,34 @@ void BoardTest::testSetupBoard(void) {
 void BoardTest::testUpdateBoard(void) {
 	Board testBoard;
 	testBoard.updateBoard('A', SPACE);
-	CPPUNIT_ASSERT(testBoard.testLocation(1, 6, ' ') == true);
+	CPPUNIT_ASSERT(testBoard.testLocation(1, 6, SPACE) == true);
 }
 
 void BoardTest::testCheckMove(void) {
 	Board testBoard;
 	testBoard.setupBoard(1);
 	CPPUNIT_ASSERT(testBoard.checkMove('B', 'C') == false);
+	CPPUNIT_ASSERT(testBoard.checkMove('B', 'A') == false);
+	CPPUNIT_ASSERT(testBoard.checkMove('D', 'B') == false);
+	CPPUNIT_ASSERT(testBoard.checkMove('H', 'G') == false);
+	CPPUNIT_ASSERT(testBoard.checkMove('E', 'D') == false);
+	CPPUNIT_ASSERT(testBoard.checkMove('E', 'F') == false);
+	CPPUNIT_ASSERT(testBoard.checkMove('I', 'J') == false);
+	testBoard.updateBoard('A', SPACE);
+	CPPUNIT_ASSERT(testBoard.checkMove('D', 'B') == true);
+	CPPUNIT_ASSERT(testBoard.checkMove('F', 'C') == true);
 }
 
 void BoardTest::testClearBoard(void){
 	Board testBoard;
 	testBoard.setupBoard(1);
 	testBoard.clearBoard();
-	CPPUNIT_ASSERT(testBoard.testLocation(2, 6, ' ') == true);
+
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 15; j++)
+			CPPUNIT_ASSERT(testBoard.testLocation(i, j, SPACE) == false);
+	}
 }
 
 void BoardTest::testRemainingPegs(void){
@@ -108,6 +122,9 @@ void BoardTest::testRemainingPegs(void){
 	testBoard.setupBoard(1);
 	remainingPegs = testBoard.remainingPegs();
 	CPPUNIT_ASSERT(remainingPegs.size() == 10);
+	testBoard.updateBoard('A', SPACE);
+	testBoard.updateBoard('D', 'B');
+	CPPUNIT_ASSERT(remainingPegs.size() == 8);
 }
 
 void BoardTest::testCheckBoard(void){
@@ -115,6 +132,15 @@ void BoardTest::testCheckBoard(void){
 	testBoard.setupBoard(1);
 	testBoard.updateBoard('B', SPACE);
 	CPPUNIT_ASSERT(testBoard.checkBoard() == true);
+	testBoard.updateBoard('I', 'E');
+	testBoard.updateBoard('G', 'H');
+	testBoard.updateBoard('J', 'G');
+	testBoard.updateBoard('I', 'D');
+	testBoard.updateBoard('I', 'E');
+	testBoard.updateBoard('I', 'J');
+	testBoard.updateBoard('C', 'F');
+	testBoard.updateBoard('C', 'I');
+	CPPUNIT_ASSERT(testboard.checkboard() == false);
 }
 
 void BoardTest::testCheckWin(void){
