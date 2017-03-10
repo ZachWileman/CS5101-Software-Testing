@@ -112,7 +112,7 @@ void BoardTest::testClearBoard(void){
 	for (int i = 0; i < 8; i++)
 	{
 		for (int j = 0; j < 15; j++)
-			CPPUNIT_ASSERT(testBoard.testLocation(i, j, SPACE) == false);
+			CPPUNIT_ASSERT(testBoard.testLocation(i, j, SPACE) == true);
 	}
 }
 
@@ -124,6 +124,7 @@ void BoardTest::testRemainingPegs(void){
 	CPPUNIT_ASSERT(remainingPegs.size() == 10);
 	testBoard.updateBoard('A', SPACE);
 	testBoard.updateBoard('D', 'B');
+	remainingPegs = testBoard.remainingPegs();
 	CPPUNIT_ASSERT(remainingPegs.size() == 8);
 }
 
