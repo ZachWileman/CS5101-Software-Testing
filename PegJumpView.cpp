@@ -46,7 +46,7 @@ void PegJumpView::firstPeg(){
 void PegJumpView::twoPeg(){
 	cout << "Please enter the first and second peg separated by space (ex. \"A B\") where the first character is the peg \n"
 		 <<	"you want to move and the second character is the position of the peg you wish to jump over. If at any point,\n"
-		 <<	"you would like to automatically solve your game, enter the number 8" << endl;
+		 <<	"you would like to run the autosolver, enter the number 8" << endl;
 }
 
 void PegJumpView::solutionFound(vector<char> &solutionList){
