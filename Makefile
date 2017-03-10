@@ -8,10 +8,16 @@ boardtest:
 modeltest:
 	g++ -o modeltest Peg.cpp Board.cpp PegJumpModelTest.cpp PegJumpModel.cpp -lcppunit
 
+testsAndRun:
+	make pegtest
+	make boardtest
+	make modeltest
+	./pegtest
+	./boardtest
+	./modeltest
+
 main:
 	g++ -o main PegJumpController.cpp PegJumpView.cpp PegJumpModel.cpp Board.cpp Peg.cpp
 
-.PHONY: clean
-
 clean:
-	rm boardtest pegtest main modeltest 2>/dev/null || true	
+	rm boardtest pegtest modeltest main *.xml 2>/dev/null || true	
