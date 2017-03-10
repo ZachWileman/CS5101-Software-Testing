@@ -5,11 +5,11 @@ pegtest:
 boardtest:
 	g++ -o boardtest Peg.cpp Board.cpp BoardTest.cpp -lcppunit
 
-main:
-	g++ -o main PegJumpController.cpp PegJumpView.cpp PegJumpModel.cpp Board.cpp Peg.cpp
-
 modeltest:
 	g++ -o modeltest Peg.cpp Board.cpp PegJumpModelTest.cpp PegJumpModel.cpp -lcppunit
+
+main:
+	g++ -o main PegJumpController.cpp PegJumpView.cpp PegJumpModel.cpp Board.cpp Peg.cpp
 
 .PHONY: clean
 
