@@ -140,7 +140,7 @@ void BoardTest::testCheckBoard(void){
 	testBoard.updateBoard('I', 'J');
 	testBoard.updateBoard('C', 'F');
 	testBoard.updateBoard('C', 'I');
-	CPPUNIT_ASSERT(testboard.checkboard() == false);
+	CPPUNIT_ASSERT(testBoard.checkboard() == false);
 }
 
 void BoardTest::testCheckWin(void){
