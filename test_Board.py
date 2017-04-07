@@ -22,3 +22,12 @@ def test_create_board():
     for i in range(rows):
         for j in range(cols):
             assert created_board.board[i][j].status_code == expected_board[i][j].status_code
+
+def test_check_user_input():
+    board = Board()
+
+    user_input = "A1     34"
+    assert board.check_input(user_input) == False
+
+    user_input = "A1 S"
+    assert board.check_input(user_input) == True
