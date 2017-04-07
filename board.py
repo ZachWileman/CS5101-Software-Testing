@@ -7,7 +7,7 @@ class Board():
         self.rows = 10
         self.cols = 20
 
-        # Board Size = 20x20
+        # Board Size = 10x20
         self.board = [[Tile() for i in range(self.cols)] for j in range(self.rows)]
 
     def print_board(self):
