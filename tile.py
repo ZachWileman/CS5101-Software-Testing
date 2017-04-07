@@ -10,4 +10,4 @@ class Tile():
          3 = SHIP_LENGTH
         '''
 
-        self.status_code = 0
+        self.status_code = '~'

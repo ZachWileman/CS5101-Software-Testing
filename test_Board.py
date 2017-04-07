@@ -14,7 +14,7 @@ from board import Board
 
 def test_create_board():
     rows = 10
-    cols = 20
+    cols = 10
 
     created_board = Board()
     expected_board = [[Tile() for i in range(cols)] for j in range(rows)]
