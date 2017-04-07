@@ -16,8 +16,3 @@ class Board():
                 print('{} '.format(self.board[i][j].status_code), end='')
 
             print('')
-
-
-if __name__ == '__main__':
-    board = Board()
-    board.print_board()
