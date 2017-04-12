@@ -12,7 +12,14 @@ if __name__ == '__main__':
     while True:
         View.ship_placement()
         ship = input('')
-        if board.check_input(ship):
-            print('Valid input')
+        valid, position = board.check_input(ship)
+        if valid:
+            valid, locations = board.check_overlap(position)
+            if valid:
+                board.place_ship(locations)
+                View.ship_placement_successful()
+                board.print_board()
+            else:
+                View.ship_placement_overlap()
         else:
-            print('Invalid input')
+            View.ship_placement_invalid()

@@ -3,19 +3,22 @@ from tile import Tile
 global COL_IDENTS
 global ROW_IDENTS
 global VALID_DIRECTIONS
-COL_IDENTS = [' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
-ROW_IDENTS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+ROW_IDENTS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+COL_IDENTS = [' ', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 VALID_DIRECTIONS = ['N', 'E', 'W', 'S']
 
 class Board():
 
     def __init__(self):
-        self.board = []
+        self.board = {}
         self.rows = 10
         self.cols = 10
+        self.ships = {}
 
-        # Board Size = 10x20
-        self.board = [[Tile() for i in range(self.cols)] for j in range(self.rows)]
+        for i in range(self.rows):
+            self.board[i] = []
+            for j in range(self.cols):
+                self.board[i].append(Tile(i,j))
 
     def print_board(self):
         global COL_IDENTS
@@ -34,46 +37,87 @@ class Board():
             print('')
 
     def check_input(self, ship_placement):
-        # TODO: Need to also make sure that ships don't overlap
-
         global COL_IDENTS
         global ROW_IDENTS
 
+        # Strips the user's input of all spaces
         ship_placement = "".join(ship_placement.split())
 
+        # Validates the user input a valid number of characters and that the characters were
+        # valid eligible characters
         if len(ship_placement) != 3:
-            return False
-        if ship_placement[0] not in COL_IDENTS:
-            return False
-        if ship_placement[1] not in ROW_IDENTS:
-            return False
+            return (False, ())
+        if ship_placement[0] not in ROW_IDENTS:
+            return (False, ())
+        if ship_placement[1] not in COL_IDENTS:
+            return (False, ())
         if ship_placement[2] not in VALID_DIRECTIONS:
-            return False
+            return (False, ())
 
-        ship_start_horizontal = ord(ship_placement[0]) - 65 # A B C . . .
-        ship_start_vertical = int(ship_placement[1]) # 0 1 2 . . .
-        ship_end_vertical = None
-        ship_end_horizontal = None
+        # Grabs the individual pieces of data from the stripped user input
+        ship_start_row = ord(ship_placement[0]) - 65 # A B C . . .
+        ship_start_col = int(ship_placement[1]) # 0 1 2 . . .
         direction = ship_placement[2]
 
+        # Checks if the users input would end up making the ship go off the board
         if direction == 'N':
-            ship_end_vertical = ship_start_vertical - 2
-            if ship_end_vertical < 0:
-                return False
+            if (ship_start_row - 2) < 0:
+                return (False, ())
 
-        if direction == 'S':
-            ship_end_vertical = ship_start_vertical + 2
-            if ship_end_vertical > self.rows-1:
-                return False
+        elif direction == 'S':
+            if (ship_start_row + 2) >= self.rows:
+                return (False, ())
 
-        if direction == 'W':
-            ship_end_horizontal = ship_start_horizontal - 2
-            if ship_end_horizontal < 0:
-                return False
+        elif direction == 'W':
+            if (ship_start_col - 2) < 0:
+                return (False, ())
 
-        if direction == 'E':
-            ship_end_horizontal = ship_start_horizontal + 2
-            if ship_end_horizontal > self.cols-1:
-                return False
+        elif direction == 'E':
+            if (ship_start_col + 2) >= self.cols:
+                return (False, ())
 
-        return True
+        return (True, (ship_start_row, ship_start_col, direction))
+
+    def check_overlap(self, position):
+        # Grab initial placement of ship with direction
+        x = position[0]
+        y = position[1]
+        direction = position[2]
+
+        # Add initial tile locations
+        locations = []
+
+        # Grab all locations that will be set to a ship
+        if direction == 'N':
+            for i in range(3):
+                locations.append(self.board[x-i][y])
+
+        elif direction == 'E':
+            for i in range(3):
+                locations.append(self.board[x][y+i])
+
+        elif direction == 'S':
+            for i in range(3):
+                locations.append(self.board[x+i][y])
+
+        elif direction == 'W':
+            for i in range(3):
+                locations.append(self.board[x][y-i])
+
+        # Check if ships overlap
+        for tiles in self.ships.values():
+            for tile in tiles:
+                if tile in locations:
+                    # Invalid
+                    return (False, None)
+
+        # Valid
+        return (True, locations)
+
+    def place_ship(self, locations):
+        # Add ship to self.ships
+        self.ships[len(self.ships)] = locations
+
+        # Sets tile locations to have a "status_code" of 1; meaning they're a ship
+        for tile in locations:
+            self.board[tile.x][tile.y].status_code = 1
