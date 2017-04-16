@@ -37,6 +37,25 @@ class Board():
 
             print('')
 
+    def print_shot_board(self):
+        global COL_IDENTS
+        global ROW_IDENTS
+
+        for i in range(len(COL_IDENTS)):
+            print('{} '.format(COL_IDENTS[i]), end='')
+        print('')
+
+        for i in range(self.rows):
+            print('{} '.format(ROW_IDENTS[i]), end='')
+
+            for j in range(self.cols):
+                if self.board[i][j].status_code == 1:
+                    print('~ ', end='')
+                else:
+                    print('{} '.format(self.board[i][j].status_code), end='')
+
+            print('')
+
     def check_input(self, ship_placement):
         global COL_IDENTS
         global ROW_IDENTS
@@ -178,3 +197,18 @@ class Board():
             return False
         
         return False
+
+    def generate_random_shot(self):
+        computer_input = ""
+        
+        #gets random row input
+        num_random = random.randint(0,9)
+        row_random = ROW_IDENTS[num_random]
+        computer_input += row_random
+
+        #gets random col input
+        num_random = random.randint(1,10)
+        col_random = COL_IDENTS[num_random]
+        computer_input += col_random
+
+        return computer_input

@@ -42,18 +42,23 @@ if __name__ == '__main__':
     computer_board.print_board()
 
     #shots are fired
-    while True:
+    while True: #while winner is not found
         #user fire shots
         View.fire_shots()
-        shots = input('')
-        valid, coordinate = computer_board.validate_shots(shots)
+        user_shot = input('')
+        valid, user_coordinate = computer_board.validate_shots(user_shot)
         if valid:
             #update computer board
-            if computer_board.place_shot(coordinate):
-                View.shot_response_true(coordinate)
-                computer_board.print_board()
-                #computer shoots
-            
+            if computer_board.place_shot(user_coordinate):
+                View.shot_response_true(user_coordinate)
+                computer_board.print_shot_board()
+
             else:
-                View.shot_response_false(coordinate)
-                computer_board.print_board()
+                View.shot_response_false(user_coordinate)
+                computer_board.print_shot_board()
+
+            #computer's turn to shoot
+            computer_shot = computer_board.generate_random_shot()
+            valid, computer_coordinate = user_board.validate_shots(computer_shot)
+            user_board.place_shot(computer_coordinate)
+            user_board.print_shot_board()
