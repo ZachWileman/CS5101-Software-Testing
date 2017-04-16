@@ -1,4 +1,5 @@
 from tile import Tile
+import random
 
 global COL_IDENTS
 global ROW_IDENTS
@@ -121,3 +122,23 @@ class Board():
         # Sets tile locations to have a "status_code" of 1; meaning they're a ship
         for tile in locations:
             self.board[tile.x][tile.y].status_code = 1
+
+    def generate_random_input(self):
+        computer_input = ""
+        
+        #gets random row input
+        num_random = random.randint(0,9)
+        row_random = ROW_IDENTS[num_random]
+        computer_input += row_random
+
+        #gets random col input
+        num_random = random.randint(1,10)
+        col_random = COL_IDENTS[num_random]
+        computer_input += col_random
+
+        #gets random direction input
+        num_random = random.randint(0,3)
+        dir_random = VALID_DIRECTIONS[num_random]
+        computer_input += dir_random
+
+        return computer_input
