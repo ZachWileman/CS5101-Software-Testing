@@ -4,13 +4,12 @@ class Tile():
         ''' STATUS CODES
 
         -2 = SUNK
-        -1 = MISS
+         * = MISS
 
          ~ = INITIAL (water)
          1 = SHIP
 
-         2 = HIT
-         3 = SHIP_LENGTH
+         X = HIT
         '''
 
         self.status_code = '~'

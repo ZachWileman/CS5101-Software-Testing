@@ -12,3 +12,12 @@ def ship_placement_invalid():
 
 def ship_placement_overlap():
     print('The location you gave overlapped with another ship.')
+
+def fire_shots():
+	print('Please enter the coordinates for where to fire your shot. Ex.( A 0 )')
+
+def shot_response_true(coordinate):
+	print('You have hit a ship at coordinate {}'.format(coordinate))
+
+def shot_response_false(coordinate):
+	print('You have missed your shot at coordinate {}'.format(coordinate))	

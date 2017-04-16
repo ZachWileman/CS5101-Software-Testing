@@ -88,7 +88,6 @@ def test_place_ship():
     assert test_board.board[3][1].status_code == '~'
 
 def test_computer_random_input():
-
     ROW_IDENTS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     COL_IDENTS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     VALID_DIRECTIONS = ['N', 'E', 'W', 'S']
@@ -99,3 +98,16 @@ def test_computer_random_input():
     assert test_ship[0] in ROW_IDENTS
     assert test_ship[1] in COL_IDENTS
     assert test_ship[2] in VALID_DIRECTIONS
+
+def test_validate_shot():
+    test_board = Board()
+    test_shot = 'A 0'
+    valid, coordinate = test_board.validate_shots(test_shot)
+    assert valid == True
+
+def test_place_shot():
+    test_board = Board()
+    test_shot = 'A 0'
+    valid, test_coordinate = test_board.validate_shots(test_shot)
+    assert test_board.place_shot(test_coordinate) == False
+    assert test_board.board[0][0].status_code == '*'

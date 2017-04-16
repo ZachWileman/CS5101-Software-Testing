@@ -142,3 +142,39 @@ class Board():
         computer_input += dir_random
 
         return computer_input
+
+    def validate_shots(self, coordinate_shot):
+
+        # Strips the user's input of all spaces
+        coordinate_shot = "".join(coordinate_shot.split())
+
+        # Validates the user input a valid number of characters and that the characters were
+        # valid eligible characters
+        if len(coordinate_shot) != 2:
+            return (False, ())
+        if coordinate_shot[0] not in ROW_IDENTS:
+            return (False, ())
+        if coordinate_shot[1] not in COL_IDENTS:
+            return (False, ())
+
+        # Grabs the individual pieces of data from the stripped user input
+        ship_start_row = ord(coordinate_shot[0]) - 65 # A B C . . .
+        ship_start_col = int(coordinate_shot[1]) # 0 1 2 . . .
+
+        tile_shot = self.board[ship_start_row][ship_start_col]
+        if tile_shot.status_code == 'X' or tile_shot.status_code == '*':
+            return (False, ())
+        else:
+            return (True, (ship_start_row, ship_start_col))
+
+    def place_shot(self, coordinate_shot):
+        board_tile = self.board[coordinate_shot[0]][coordinate_shot[1]]
+        
+        if board_tile.status_code == 1:
+            board_tile.status_code = 'X'
+            return True
+        elif board_tile.status_code == '~':
+            board_tile.status_code = '*'
+            return False
+        
+        return False
