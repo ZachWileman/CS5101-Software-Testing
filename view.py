@@ -21,3 +21,6 @@ def shot_response_true(coordinate):
 
 def shot_response_false(coordinate):
 	print('You have missed your shot at coordinate {}'.format(coordinate))	
+
+def board_name(name):
+	print('{}\'s board'.format(name))

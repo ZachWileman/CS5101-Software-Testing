@@ -4,13 +4,14 @@ from tile import Tile
 import view as View
 
 if __name__ == '__main__':
-    num_starting_ships = 3 
+    num_starting_ships = 3
     num_inputs = 0
     View.start_message()
 
     user_board = Board()
     computer_board = Board()
 
+    View.board_name('User')
     user_board.print_board()
     #user input ships
     while num_inputs != num_starting_ships:
@@ -22,6 +23,7 @@ if __name__ == '__main__':
             if valid:
                 user_board.place_ship(locations)
                 View.ship_placement_successful()
+                View.board_name('User')
                 user_board.print_board()
                 num_inputs += 1
             else:
@@ -39,6 +41,7 @@ if __name__ == '__main__':
             if valid:
                 computer_board.place_ship(locations)        
                 num_inputs += 1
+    # View.board_name('Computer')
     computer_board.print_board()
 
     #shots are fired
@@ -51,14 +54,27 @@ if __name__ == '__main__':
             #update computer board
             if computer_board.place_shot(user_coordinate):
                 View.shot_response_true(user_coordinate)
-                computer_board.print_shot_board()
+                if computer_board.check_win():
+                    print('User won!')
+                    # View.board_name('Computer')
+                    # computer_board.print_board()
+                    break
 
             else:
                 View.shot_response_false(user_coordinate)
-                computer_board.print_shot_board()
-
-            #computer's turn to shoot
-            computer_shot = computer_board.generate_random_shot()
-            valid, computer_coordinate = user_board.validate_shots(computer_shot)
-            user_board.place_shot(computer_coordinate)
-            user_board.print_shot_board()
+                # print('---Shot board---')
+                # computer_board.print_shot_board()
+            print('---Shot board---')
+            computer_board.print_shot_board()
+            #computer's turn to shoot            
+            while True:
+                computer_shot = computer_board.generate_random_shot()
+                if computer_board.validate_computer_shots(*computer_shot):
+                    user_board.place_shot(computer_shot)
+                    break
+            # check for win condition
+            if user_board.check_win():
+                print('Computer won!')
+                break
+            View.board_name('User')
+            user_board.print_board()

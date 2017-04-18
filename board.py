@@ -186,29 +186,41 @@ class Board():
         else:
             return (True, (ship_start_row, ship_start_col))
 
+    def validate_computer_shots(self, row, col):
+        if self.board[row][col] == '*' or self.board[row][col] == 'X':
+            return False
+        return True
+
     def place_shot(self, coordinate_shot):
         board_tile = self.board[coordinate_shot[0]][coordinate_shot[1]]
         
+        # hit
         if board_tile.status_code == 1:
             board_tile.status_code = 'X'
             return True
+        # miss
         elif board_tile.status_code == '~':
             board_tile.status_code = '*'
             return False
         
         return False
 
-    def generate_random_shot(self):
-        computer_input = ""
-        
+    def generate_random_shot(self):        
         #gets random row input
-        num_random = random.randint(0,9)
-        row_random = ROW_IDENTS[num_random]
-        computer_input += row_random
+        row = random.randint(0,9)
+        # row_random = ROW_IDENTS[num_random]
+        # computer_input += row_random
 
         #gets random col input
-        num_random = random.randint(1,10)
-        col_random = COL_IDENTS[num_random]
-        computer_input += col_random
+        col = random.randint(0,9)
+        # col_random = COL_IDENTS[num_random]
+        # computer_input += col_random
 
-        return computer_input
+        return (row, col)
+
+    def check_win(self):
+        for i in range(self.rows):
+            for j in range(self.cols):
+                if self.board[i][j].status_code == 1:
+                    return False
+        return True

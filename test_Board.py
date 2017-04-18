@@ -112,12 +112,26 @@ def test_place_shot():
     assert test_board.place_shot(test_coordinate) == False
     assert test_board.board[0][0].status_code == '*'
 
-def test_computer_random_input():
-    ROW_IDENTS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
-    COL_IDENTS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-
+def test_computer_random_shot():
     test_board = Board()
     test_ship = test_board.generate_random_shot()
 
-    assert test_ship[0] in ROW_IDENTS
-    assert test_ship[1] in COL_IDENTS
+    assert test_ship[0] in range(0,10)
+    assert test_ship[1] in range(0,10)
+
+def test_validate_computer_shots():
+    test_board = Board()
+
+    assert test_board.validate_computer_shots(0,0)
+
+def test_check_win():
+    test_board = Board()
+
+    assert test_board.check_win()
+
+    test_input = "A1 S"
+    valid, position = test_board.check_input(test_input)
+    valid, locations = test_board.check_overlap(position)
+    test_board.place_ship(locations)
+    
+    assert test_board.check_win() == False
