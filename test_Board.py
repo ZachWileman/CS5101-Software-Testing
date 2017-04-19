@@ -40,14 +40,17 @@ def test_create_board():
     assert created_board.board[4][7].x == 4
     assert created_board.board[4][7].y == 7
 
-def test_check_input():
+def test_check_ship_placement_input():
     test_board = Board()
 
     user_input = "A1     34"
-    assert test_board.check_input(user_input) == (False, ())
+    assert test_board.check_ship_placement_input(user_input) == (False, ())
+
+    user_input = "A9 N"
+    assert test_board.check_ship_placement_input(user_input) == (False, ())
 
     user_input = "A7 S"
-    valid, locations = test_board.check_input(user_input)
+    valid, locations = test_board.check_ship_placement_input(user_input)
     assert valid == True
     assert locations[0] == 0
     assert locations[1] == 7
@@ -56,19 +59,19 @@ def test_check_input():
 def test_check_overlap():
     test_board = Board()
     test_input = "A1 S"
-    valid, position = test_board.check_input(test_input)
+    valid, position = test_board.check_ship_placement_input(test_input)
     valid, locations = test_board.check_overlap(position)
     test_board.place_ship(locations)
 
     test_input = "A2 E"
-    valid, position = test_board.check_input(test_input)
+    valid, position = test_board.check_ship_placement_input(test_input)
     valid, locations = test_board.check_overlap(position)
 
     assert valid == True
 
     test_board.place_ship(locations)
     test_input = "A3 S"
-    valid, position = test_board.check_input(test_input)
+    valid, position = test_board.check_ship_placement_input(test_input)
     valid, locations = test_board.check_overlap(position)
 
     assert valid == False
@@ -77,61 +80,135 @@ def test_check_overlap():
 def test_place_ship():
     test_board = Board()
     test_input = "A1 S"
-    valid, position = test_board.check_input(test_input)
+    valid, position = test_board.check_ship_placement_input(test_input)
     valid, locations = test_board.check_overlap(position)
     test_board.place_ship(locations)
 
     assert test_board.board[0][0].status_code == '~'
-    assert test_board.board[0][1].status_code == 1
-    assert test_board.board[1][1].status_code == 1
-    assert test_board.board[2][1].status_code == 1
+    assert test_board.board[0][1].status_code == '!'
+    assert test_board.board[1][1].status_code == '!'
+    assert test_board.board[2][1].status_code == '!'
     assert test_board.board[3][1].status_code == '~'
 
-def test_computer_random_input():
+def test_computer_random_input_placing_ship():
     ROW_IDENTS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     COL_IDENTS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     VALID_DIRECTIONS = ['N', 'E', 'W', 'S']
 
     test_board = Board()
-    test_ship = test_board.generate_random_input()
+    test_ship = test_board.generate_random_input(True)
 
+    assert len(test_ship) == 3
     assert test_ship[0] in ROW_IDENTS
     assert test_ship[1] in COL_IDENTS
     assert test_ship[2] in VALID_DIRECTIONS
 
-def test_validate_shot():
+def test_computer_random_input_placing_shot():
+    ROW_IDENTS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+    COL_IDENTS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
     test_board = Board()
-    test_shot = 'A 0'
-    valid, coordinate = test_board.validate_shots(test_shot)
+    test_shot = test_board.generate_random_input(False)
+
+    assert len(test_shot) == 2
+    assert test_shot[0] in ROW_IDENTS
+    assert test_shot[1] in COL_IDENTS
+
+def test_check_shot_input_invalid_input():
+    test_board = Board()
+    test_shot = 'A 0 4'
+    valid, coordinate = test_board.check_shot_input(test_shot)
+    assert valid == False
+    assert coordinate == None
+
+def test_check_shot_input_valid_input():
+    test_board = Board()
+    test_shot = '   A    0   '
+    valid, coordinate = test_board.check_shot_input(test_shot)
     assert valid == True
+    assert coordinate == 'A0'
+
+def test_convert_input():
+    test_board = Board()
+    user_input = 'A0'
+    coordinate = test_board.convert_input(user_input)
+    assert coordinate[0] == 0
+    assert coordinate[1] == 0
 
 def test_place_shot():
     test_board = Board()
-    test_shot = 'A 0'
-    valid, test_coordinate = test_board.validate_shots(test_shot)
-    assert test_board.place_shot(test_coordinate) == False
-    assert test_board.board[0][0].status_code == '*'
+    test_input = "A1 S"
+    valid, position = test_board.check_ship_placement_input(test_input)
+    valid, locations = test_board.check_overlap(position)
+    test_board.place_ship(locations)
 
-def test_computer_random_shot():
+    valid = test_board.place_shot((0, 1))
+    assert valid == True
+    assert test_board.board[0][1].status_code == 'X'
+
+    valid = test_board.place_shot((4,3))
+    assert valid == False
+    assert test_board.board[4][3].status_code == '*'
+
+def test_validate_shot():
     test_board = Board()
-    test_ship = test_board.generate_random_shot()
+    test_input = "A1 S"
+    valid, position = test_board.check_ship_placement_input(test_input)
+    valid, locations = test_board.check_overlap(position)
+    test_board.place_ship(locations)
 
-    assert test_ship[0] in range(0,10)
-    assert test_ship[1] in range(0,10)
+    test_board.place_shot((0, 1))
+    valid = test_board.validate_shot(0, 1)
+    assert valid == False
 
-def test_validate_computer_shots():
+    valid = test_board.validate_shot(0, 2)
+    assert valid == True
+
+def test_update_ships():
     test_board = Board()
+    test_input = "A0 S"
+    valid, position = test_board.check_ship_placement_input(test_input)
+    valid, locations = test_board.check_overlap(position)
+    test_board.place_ship(locations)
 
-    assert test_board.validate_computer_shots(0,0)
+    test_input = "A1 S"
+    valid, position = test_board.check_ship_placement_input(test_input)
+    valid, locations = test_board.check_overlap(position)
+    test_board.place_ship(locations)
+
+    test_input = "A2 S"
+    valid, position = test_board.check_ship_placement_input(test_input)
+    valid, locations = test_board.check_overlap(position)
+    test_board.place_ship(locations)
+
+    assert test_board.board[0][0].status_code == '!'
+    test_board.place_shot((0, 0))
+    ship_sunk = test_board.update_ships()
+    assert ship_sunk == False
+    assert test_board.board[0][0].status_code == 'X'
+
+    test_board.place_shot((1, 0))
+    test_board.place_shot((2, 0))
+    ship_sunk = test_board.update_ships()
+    assert ship_sunk == True
+    assert test_board.board[0][0].status_code == 'S'
+    assert test_board.board[1][0].status_code == 'S'
+    assert test_board.board[2][0].status_code == 'S'
 
 def test_check_win():
     test_board = Board()
-
-    assert test_board.check_win()
-
-    test_input = "A1 S"
-    valid, position = test_board.check_input(test_input)
+    test_input = "A0 S"
+    valid, position = test_board.check_ship_placement_input(test_input)
     valid, locations = test_board.check_overlap(position)
     test_board.place_ship(locations)
-    
-    assert test_board.check_win() == False
+
+    winner = test_board.check_win()
+    assert winner == False
+
+    test_board.place_shot((0,0))
+    test_board.place_shot((1,0))
+    test_board.place_shot((2,0))
+    test_board.update_ships()
+
+    winner = test_board.check_win()
+    assert winner == True

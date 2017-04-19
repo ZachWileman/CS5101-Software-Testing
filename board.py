@@ -1,5 +1,5 @@
 from tile import Tile
-import random
+from random import randint
 
 global COL_IDENTS
 global ROW_IDENTS
@@ -21,9 +21,8 @@ class Board():
             for j in range(self.cols):
                 self.board[i].append(Tile(i,j))
 
-    def print_board(self):
-        global COL_IDENTS
-        global ROW_IDENTS
+    def print_board(self, name):
+        print('--- {}\'s ship board ---'.format(name))
 
         for i in range(len(COL_IDENTS)):
             print('{} '.format(COL_IDENTS[i]), end='')
@@ -36,10 +35,10 @@ class Board():
                 print('{} '.format(self.board[i][j].status_code), end='')
 
             print('')
+        print('')
 
     def print_shot_board(self):
-        global COL_IDENTS
-        global ROW_IDENTS
+        print('--- User\'s shot board ---')
 
         for i in range(len(COL_IDENTS)):
             print('{} '.format(COL_IDENTS[i]), end='')
@@ -49,17 +48,15 @@ class Board():
             print('{} '.format(ROW_IDENTS[i]), end='')
 
             for j in range(self.cols):
-                if self.board[i][j].status_code == 1:
+                if self.board[i][j].status_code == '!':
                     print('~ ', end='')
                 else:
                     print('{} '.format(self.board[i][j].status_code), end='')
 
             print('')
+        print('')
 
-    def check_input(self, ship_placement):
-        global COL_IDENTS
-        global ROW_IDENTS
-
+    def check_ship_placement_input(self, ship_placement):
         # Strips the user's input of all spaces
         ship_placement = "".join(ship_placement.split())
 
@@ -138,31 +135,33 @@ class Board():
         # Add ship to self.ships
         self.ships[len(self.ships)] = locations
 
-        # Sets tile locations to have a "status_code" of 1; meaning they're a ship
+        # Sets tile locations to have a "status_code" of !; meaning they're a ship
         for tile in locations:
-            self.board[tile.x][tile.y].status_code = 1
+            self.board[tile.x][tile.y].status_code = '!'
 
-    def generate_random_input(self):
+    # Used for generating random input for placing ships & firing shots
+    def generate_random_input(self, placing_a_ship):
         computer_input = ""
-        
+
         #gets random row input
-        num_random = random.randint(0,9)
+        num_random = randint(0,(len(ROW_IDENTS)-1))
         row_random = ROW_IDENTS[num_random]
         computer_input += row_random
 
         #gets random col input
-        num_random = random.randint(1,10)
+        num_random = randint(1,(len(COL_IDENTS)-1))
         col_random = COL_IDENTS[num_random]
         computer_input += col_random
 
-        #gets random direction input
-        num_random = random.randint(0,3)
-        dir_random = VALID_DIRECTIONS[num_random]
-        computer_input += dir_random
+        if placing_a_ship:
+            #gets random direction input
+            num_random = randint(0,(len(VALID_DIRECTIONS)-1))
+            dir_random = VALID_DIRECTIONS[num_random]
+            computer_input += dir_random
 
         return computer_input
 
-    def validate_shots(self, coordinate_shot):
+    def check_shot_input(self, coordinate_shot):
 
         # Strips the user's input of all spaces
         coordinate_shot = "".join(coordinate_shot.split())
@@ -170,57 +169,77 @@ class Board():
         # Validates the user input a valid number of characters and that the characters were
         # valid eligible characters
         if len(coordinate_shot) != 2:
-            return (False, ())
+            return (False, None)
         if coordinate_shot[0] not in ROW_IDENTS:
-            return (False, ())
+            return (False, None)
         if coordinate_shot[1] not in COL_IDENTS:
-            return (False, ())
+            return (False, None)
 
+        return (True, coordinate_shot)
+
+    def convert_input(self, coordinate_shot):
         # Grabs the individual pieces of data from the stripped user input
-        ship_start_row = ord(coordinate_shot[0]) - 65 # A B C . . .
-        ship_start_col = int(coordinate_shot[1]) # 0 1 2 . . .
+        row = ord(coordinate_shot[0]) - 65 # A B C . . .
+        col = int(coordinate_shot[1]) # 0 1 2 . . .
 
-        tile_shot = self.board[ship_start_row][ship_start_col]
-        if tile_shot.status_code == 'X' or tile_shot.status_code == '*':
-            return (False, ())
-        else:
-            return (True, (ship_start_row, ship_start_col))
+        return (row,col)
 
-    def validate_computer_shots(self, row, col):
-        if self.board[row][col] == '*' or self.board[row][col] == 'X':
-            return False
-        return True
+    def validate_shot(self, row, col):
+        # Gets the status code of the tile being shot at
+        tile_status = self.board[row][col].status_code
+        valid_locations = ['!', '~']
 
-    def place_shot(self, coordinate_shot):
-        board_tile = self.board[coordinate_shot[0]][coordinate_shot[1]]
-        
-        # hit
-        if board_tile.status_code == 1:
-            board_tile.status_code = 'X'
+        # Makes sure the user is shooting a place they've already tried
+        if tile_status in valid_locations:
             return True
-        # miss
-        elif board_tile.status_code == '~':
-            board_tile.status_code = '*'
+        else:
             return False
-        
+
+    def place_shot(self, coordinate):
+        tile_status = self.board[coordinate[0]][coordinate[1]].status_code
+
+        # Hit a ship
+        if tile_status == '!':
+            self.board[coordinate[0]][coordinate[1]].status_code = 'X'
+            return True
+        # Hit the water
+        elif tile_status == '~':
+            self.board[coordinate[0]][coordinate[1]].status_code = '*'
+            return False
+
         return False
 
-    def generate_random_shot(self):        
-        #gets random row input
-        row = random.randint(0,9)
-        # row_random = ROW_IDENTS[num_random]
-        # computer_input += row_random
+    def update_ships(self):
+        ships_to_be_removed = {}
 
-        #gets random col input
-        col = random.randint(0,9)
-        # col_random = COL_IDENTS[num_random]
-        # computer_input += col_random
+        # Checks if any of the ships are completely sunk
+        for ship_id, ship_tiles in self.ships.items():
+            ship_sunk = True
 
-        return (row, col)
+            for tile in ship_tiles:
+                if tile.status_code != 'X':
+                    ship_sunk = False
+                    break
+
+            # If a ship got completely hit, queue it up to be sunk
+            if ship_sunk:
+                ships_to_be_removed[ship_id] = ship_tiles
+
+        # Removes any sunk ships from the self.ships variable and also updates the board
+        # about the sunk ship.
+        for ship_id, ship_tiles in ships_to_be_removed.items():
+            for tile in ship_tiles:
+                self.board[tile.x][tile.y].status_code = 'S'
+            self.ships.pop(ship_id)
+
+        # Returns true if a ship sunk
+        if ships_to_be_removed:
+            return True
+
+        return False
 
     def check_win(self):
-        for i in range(self.rows):
-            for j in range(self.cols):
-                if self.board[i][j].status_code == 1:
-                    return False
+        if self.ships:
+            return False
+
         return True

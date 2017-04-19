@@ -3,13 +3,12 @@ class Tile():
     def __init__(self, x, y):
         ''' STATUS CODES
 
-        -2 = SUNK
-         * = MISS
+        ~ = INITIAL (water)
+        ! = SHIP
+        * = MISS
+        X = HIT
+        S = SUNK
 
-         ~ = INITIAL (water)
-         1 = SHIP
-
-         X = HIT
         '''
 
         self.status_code = '~'

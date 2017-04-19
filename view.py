@@ -1,5 +1,5 @@
 def start_message():
-    print('Welcome to Battleship')
+    print('Welcome to Battleship\n')
 
 def ship_placement():
     print('Please enter the coordinates for where to place your 3 ships. Ex.( A1 N )')
@@ -16,11 +16,20 @@ def ship_placement_overlap():
 def fire_shots():
 	print('Please enter the coordinates for where to fire your shot. Ex.( A 0 )')
 
-def shot_response_true(coordinate):
-	print('You have hit a ship at coordinate {}'.format(coordinate))
+def invalid_shot():
+    print('You have entered an invalid coordinate location to shot.')
 
-def shot_response_false(coordinate):
-	print('You have missed your shot at coordinate {}'.format(coordinate))	
+def hit_ship(coordinate):
+	print('You have hit a ship at coordinate {}\n'.format(coordinate))
 
-def board_name(name):
-	print('{}\'s board'.format(name))
+def hit_missed(coordinate):
+	print('You have missed your shot at coordinate {}\n'.format(coordinate))
+
+def hit_and_sunk_ship(coordinate):
+    print('You\'ve hit a ship at coordinate {} and sunk the ship\n'.format(coordinate))
+
+def start_game():
+    print('BEGIN THE GAME!\n')
+
+def print_winner(name):
+    print('The {} won!'.format(name))
