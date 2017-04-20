@@ -69,6 +69,8 @@ if __name__ == '__main__':
                 user_coordinate_converted = computer_board.convert_input(user_coordinate)
                 if computer_board.validate_shot(*user_coordinate_converted):
                     break
+                else:
+                    View.invalid_shot()
             else:
                 View.invalid_shot()
 
@@ -92,9 +94,9 @@ if __name__ == '__main__':
 
         #computer's turn to shoot
         while True:
-            comp_coordinate = computer_board.generate_random_input(False)
-            comp_coordinate = computer_board.convert_input(comp_coordinate)
-            if computer_board.validate_shot(*comp_coordinate):
+            comp_coordinate = user_board.generate_random_input(False)
+            comp_coordinate = user_board.convert_input(comp_coordinate)
+            if user_board.validate_shot(*comp_coordinate):
                 user_board.place_shot(comp_coordinate)
                 break
 
