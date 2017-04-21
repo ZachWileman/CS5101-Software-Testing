@@ -33,3 +33,9 @@ def start_game():
 
 def print_winner(name):
     print('The {} won!'.format(name))
+
+def play_again():
+    print('Would you like to play again? (y=yes, n=no)')
+
+def invalid_input_on_play_again():
+    print('Please enter either \'y\' or \'n\'.')
