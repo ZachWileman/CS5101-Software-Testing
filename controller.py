@@ -7,6 +7,8 @@ if __name__ == '__main__':
     num_starting_ships = 3
     valid_inputs = 0
     keep_playing = True
+    user_score = 0
+    computer_score = 0
 
     while keep_playing:
         View.start_message()
@@ -110,6 +112,14 @@ if __name__ == '__main__':
             if user_board.check_win():
                 View.print_winner('computer')
                 break
+
+        # Compute the user and computers score
+        user_score += computer_board.compute_game_score()
+        computer_score += user_board.compute_game_score()
+
+        # Print the scores
+        View.print_score('user', user_score)
+        View.print_score('computer', computer_score)
 
         # Asks user if they would like to play again & validates input
         while True:

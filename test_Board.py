@@ -195,6 +195,28 @@ def test_update_ships():
     assert test_board.board[1][0].status_code == 'S'
     assert test_board.board[2][0].status_code == 'S'
 
+def test_compute_game_score():
+    test_board = Board()
+    valid, position = test_board.check_ship_placement_input('A0 S')
+    valid, locations = test_board.check_overlap(position)
+    test_board.place_ship(locations)
+
+    score = test_board.compute_game_score()
+    assert score == 0
+
+    test_board.place_shot((0, 0))
+    test_board.place_shot((1, 0))
+    test_board.update_ships()
+
+    score = test_board.compute_game_score()
+    assert score == 2
+
+    test_board.place_shot((2, 0))
+    test_board.update_ships()
+
+    score = test_board.compute_game_score()
+    assert score == 8
+
 def test_check_win():
     test_board = Board()
     test_input = "A0 S"

@@ -14,6 +14,8 @@ class Board():
         self.board = {}
         self.rows = 10
         self.cols = 10
+        self.num_ship_hits = 0 # The amount of times a shot hit a shit
+        self.num_ships_sunk = 0
         self.ships = {}
 
         for i in range(self.rows):
@@ -201,6 +203,7 @@ class Board():
         # Hit a ship
         if tile_status == '!':
             self.board[coordinate[0]][coordinate[1]].status_code = 'X'
+            self.num_ship_hits += 1
             return True
         # Hit the water
         elif tile_status == '~':
@@ -234,9 +237,13 @@ class Board():
 
         # Returns true if a ship sunk
         if ships_to_be_removed:
+            self.num_ships_sunk += 1
             return True
 
         return False
+
+    def compute_game_score(self):
+        return self.num_ship_hits + (5 * self.num_ships_sunk)
 
     def check_win(self):
         if self.ships:
