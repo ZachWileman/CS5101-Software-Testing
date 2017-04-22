@@ -4,7 +4,7 @@ from tile import Tile
 import view as View
 
 if __name__ == '__main__':
-    num_starting_ships = 3
+    num_starting_ships = 4
     valid_inputs = 0
     keep_playing = True
     user_score = 0
@@ -19,11 +19,13 @@ if __name__ == '__main__':
 
         # User places ships onto their board
         while valid_inputs != num_starting_ships:
-            View.ship_placement()
+            View.ship_placement((5 - valid_inputs))
             ship = input('')
-            valid, position = user_board.check_ship_placement_input(ship)
+
+            # Users insert different sized ships starting with length 5 and going to length 2
+            valid, position = user_board.check_ship_placement_input(ship, (5 - valid_inputs))
             if valid:
-                valid, locations = user_board.check_overlap(position)
+                valid, locations = user_board.check_overlap(position, (5 - valid_inputs))
                 if valid:
                     user_board.place_ship(locations)
                     View.ship_placement_successful()
@@ -39,9 +41,9 @@ if __name__ == '__main__':
         # Load up computer's board with initial ships
         while valid_inputs != num_starting_ships:
             ship = computer_board.generate_random_input(True)
-            valid, position = computer_board.check_ship_placement_input(ship)
+            valid, position = computer_board.check_ship_placement_input(ship, (5 - valid_inputs))
             if valid:
-                valid, locations = computer_board.check_overlap(position)
+                valid, locations = computer_board.check_overlap(position, (5 - valid_inputs))
                 if valid:
                     computer_board.place_ship(locations)
                     valid_inputs += 1

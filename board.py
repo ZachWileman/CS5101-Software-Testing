@@ -58,7 +58,7 @@ class Board():
             print('')
         print('')
 
-    def check_ship_placement_input(self, ship_placement):
+    def check_ship_placement_input(self, ship_placement, ship_length):
         # Strips the user's input of all spaces
         ship_placement = "".join(ship_placement.split())
 
@@ -80,24 +80,24 @@ class Board():
 
         # Checks if the users input would end up making the ship go off the board
         if direction == 'N':
-            if (ship_start_row - 2) < 0:
+            if (ship_start_row - (ship_length-1)) < 0:
                 return (False, ())
 
         elif direction == 'S':
-            if (ship_start_row + 2) >= self.rows:
+            if (ship_start_row + (ship_length-1)) >= self.rows:
                 return (False, ())
 
         elif direction == 'W':
-            if (ship_start_col - 2) < 0:
+            if (ship_start_col - (ship_length-1)) < 0:
                 return (False, ())
 
         elif direction == 'E':
-            if (ship_start_col + 2) >= self.cols:
+            if (ship_start_col + (ship_length-1)) >= self.cols:
                 return (False, ())
 
         return (True, (ship_start_row, ship_start_col, direction))
 
-    def check_overlap(self, position):
+    def check_overlap(self, position, ship_length):
         # Grab initial placement of ship with direction
         x = position[0]
         y = position[1]
@@ -108,19 +108,19 @@ class Board():
 
         # Grab all locations that will be set to a ship
         if direction == 'N':
-            for i in range(3):
+            for i in range(ship_length):
                 locations.append(self.board[x-i][y])
 
         elif direction == 'E':
-            for i in range(3):
+            for i in range(ship_length):
                 locations.append(self.board[x][y+i])
 
         elif direction == 'S':
-            for i in range(3):
+            for i in range(ship_length):
                 locations.append(self.board[x+i][y])
 
         elif direction == 'W':
-            for i in range(3):
+            for i in range(ship_length):
                 locations.append(self.board[x][y-i])
 
         # Check if ships overlap

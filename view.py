@@ -1,8 +1,8 @@
 def start_message():
     print('Welcome to Battleship\n')
 
-def ship_placement():
-    print('Please enter the coordinates for where to place your 3 ships. Ex.( A1 N )')
+def ship_placement(ship_length):
+    print('Please enter the coordinates for where to place your ship of length: {}. Ex.( A1 N )'.format(ship_length))
 
 def ship_placement_successful():
     print('The ship was successfully added to the board.')
