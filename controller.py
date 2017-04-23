@@ -14,6 +14,7 @@ if __name__ == '__main__':
         View.start_message()
         user_board = Board()
         computer_board = Board()
+        user_board.generate_computers_random_shots()
 
         user_board.print_board('User')
 
@@ -40,7 +41,7 @@ if __name__ == '__main__':
 
         # Load up computer's board with initial ships
         while valid_inputs != num_starting_ships:
-            ship = computer_board.generate_random_input(True)
+            ship = computer_board.generate_random_ship_placement()
             valid, position = computer_board.check_ship_placement_input(ship, (5 - valid_inputs))
             if valid:
                 valid, locations = computer_board.check_overlap(position, (5 - valid_inputs))
@@ -104,12 +105,10 @@ if __name__ == '__main__':
 
                 # If no smart shot found, genereate a random shot
                 if not smart_shot_found:
-                    comp_coordinate = user_board.generate_random_input(False)
-                    comp_coordinate = user_board.convert_input(comp_coordinate)
+                    comp_coordinate = user_board.select_random_shot()
 
-                if user_board.validate_shot(*comp_coordinate):
-                    user_board.place_shot(comp_coordinate)
-                    break
+                user_board.place_shot(comp_coordinate)
+                break
 
             # Updates user's board with computers shots
             user_board.place_shot(comp_coordinate)

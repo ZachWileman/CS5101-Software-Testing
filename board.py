@@ -1,5 +1,5 @@
 from tile import Tile
-from random import randint
+from random import choice
 
 global COL_IDENTS
 global ROW_IDENTS
@@ -17,6 +17,9 @@ class Board():
         self.cols = 10
         self.num_ship_hits = 0 # The amount of times a shot hit a shit
         self.num_ships_sunk = 0
+
+        # Member variables used by the computer
+        self.tiles_to_attempt = []
         self.ship_found = {
             "tiles_hit": None,
             "direction": None
@@ -145,27 +148,46 @@ class Board():
         for tile in locations:
             self.board[tile.x][tile.y].status_code = '!'
 
-    # Used for generating random input for placing ships & firing shots
-    def generate_random_input(self, placing_a_ship):
-        computer_input = ""
+    # Used for generating random input for placing ships
+    def generate_random_ship_placement(self):
+        return choice(ROW_IDENTS) + choice(COL_IDENTS[1:]) + choice(VALID_DIRECTIONS)
 
-        #gets random row input
-        num_random = randint(0,(len(ROW_IDENTS)-1))
-        row_random = ROW_IDENTS[num_random]
-        computer_input += row_random
+    def generate_computers_random_shots(self):
+        # Since the smallest ship is of length 2, the computer will attempt
+        # to place shots in a checkerboard pattern. Doing this would mean
+        # that every ship would be hit at least once. And if the computer
+        # detects a ship has been hit, it will shoot any tile until the ship(s)
+        # hit have been sunk.
 
-        #gets random col input
-        num_random = randint(1,(len(COL_IDENTS)-1))
-        col_random = COL_IDENTS[num_random]
-        computer_input += col_random
+        counter = 0
 
-        if placing_a_ship:
-            #gets random direction input
-            num_random = randint(0,(len(VALID_DIRECTIONS)-1))
-            dir_random = VALID_DIRECTIONS[num_random]
-            computer_input += dir_random
+        for i in range(self.rows):
+            if i % 2 == 0:
+                counter = 0
+            else:
+                counter = 1
+            for j in range(self.cols):
+                if counter % 2 == 0:
+                    self.tiles_to_attempt.append((i,j))
+                counter += 1
 
-        return computer_input
+    def select_random_shot(self):
+        random_coordinate = None
+
+        # Loops until a valid shot is found
+        while True:
+            random_coordinate = choice(self.tiles_to_attempt)
+            if self.validate_shot(*random_coordinate):
+                break
+
+            # Removes invalid coordinates
+            self.tiles_to_attempt.remove(random_coordinate)
+
+        # Removes the to-be-made shot because the coordinate location will
+        # no longer be valid after a shot has been made at the specified
+        # coordinate location.
+        self.tiles_to_attempt.remove(random_coordinate)
+        return random_coordinate
 
     def check_shot_in_specified_direction(self, coordinate, direction):
         row = coordinate[0]

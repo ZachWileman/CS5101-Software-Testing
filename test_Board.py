@@ -90,29 +90,63 @@ def test_place_ship():
     assert test_board.board[2][1].status_code == '!'
     assert test_board.board[3][1].status_code == '~'
 
-def test_computer_random_input_placing_ship():
+def test_generate_random_ship_placement():
     ROW_IDENTS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     COL_IDENTS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     VALID_DIRECTIONS = ['N', 'E', 'W', 'S']
 
     test_board = Board()
-    test_ship = test_board.generate_random_input(True)
+    test_ship = test_board.generate_random_ship_placement()
 
     assert len(test_ship) == 3
     assert test_ship[0] in ROW_IDENTS
     assert test_ship[1] in COL_IDENTS
     assert test_ship[2] in VALID_DIRECTIONS
 
-def test_computer_random_input_placing_shot():
-    ROW_IDENTS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
-    COL_IDENTS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-
+def test_generate_computers_random_shots():
     test_board = Board()
-    test_shot = test_board.generate_random_input(False)
+    test_board.generate_computers_random_shots()
 
-    assert len(test_shot) == 2
-    assert test_shot[0] in ROW_IDENTS
-    assert test_shot[1] in COL_IDENTS
+    valid_locations = [
+        (0,0), (0,2), (0,4), (0,6), (0,8),
+        (1,1), (1,3), (1,5), (1,7), (1,9),
+        (2,0), (2,2), (2,4), (2,6), (2,8),
+        (3,1), (3,3), (3,5), (3,7), (3,9),
+        (4,0), (4,2), (4,4), (4,6), (4,8),
+        (5,1), (5,3), (5,5), (5,7), (5,9),
+        (6,0), (6,2), (6,4), (6,6), (6,8),
+        (7,1), (7,3), (7,5), (7,7), (7,9),
+        (8,0), (8,2), (8,4), (8,6), (8,8),
+        (9,1), (9,3), (9,5), (9,7), (9,9),
+    ]
+
+    for coordinate in valid_locations:
+        assert coordinate in test_board.tiles_to_attempt
+    assert len(valid_locations) == len(test_board.tiles_to_attempt)
+
+def test_select_random_shot():
+    test_board = Board()
+    test_board.generate_computers_random_shots()
+
+    valid_locations = [
+        (0,0), (0,2), (0,4), (0,6), (0,8),
+        (1,1), (1,3), (1,5), (1,7), (1,9),
+        (2,0), (2,2), (2,4), (2,6), (2,8),
+        (3,1), (3,3), (3,5), (3,7), (3,9),
+        (4,0), (4,2), (4,4), (4,6), (4,8),
+        (5,1), (5,3), (5,5), (5,7), (5,9),
+        (6,0), (6,2), (6,4), (6,6), (6,8),
+        (7,1), (7,3), (7,5), (7,7), (7,9),
+        (8,0), (8,2), (8,4), (8,6), (8,8),
+        (9,1), (9,3), (9,5), (9,7), (9,9),
+    ]
+
+    for i in range(len(valid_locations)):
+        coordinate = test_board.select_random_shot()
+        assert coordinate in valid_locations
+        assert coordinate not in test_board.tiles_to_attempt
+
+    assert len(test_board.tiles_to_attempt) == 0
 
 def test_check_shot_in_specified_direction():
     test_board = Board()
