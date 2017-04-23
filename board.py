@@ -6,17 +6,21 @@ global ROW_IDENTS
 global VALID_DIRECTIONS
 ROW_IDENTS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
 COL_IDENTS = [' ', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-VALID_DIRECTIONS = ['N', 'E', 'W', 'S']
+VALID_DIRECTIONS = ['N', 'E', 'S', 'W']
 
 class Board():
 
     def __init__(self):
         self.board = {}
+        self.ships = {}
         self.rows = 10
         self.cols = 10
         self.num_ship_hits = 0 # The amount of times a shot hit a shit
         self.num_ships_sunk = 0
-        self.ships = {}
+        self.ship_found = {
+            "tiles_hit": None,
+            "direction": None
+        }
 
         for i in range(self.rows):
             self.board[i] = []
@@ -163,6 +167,105 @@ class Board():
 
         return computer_input
 
+    def check_shot_in_specified_direction(self, coordinate, direction):
+        row = coordinate[0]
+        col = coordinate[1]
+        new_coordinate = None
+
+        if direction == 'N':
+            if (row-1) >= 0:
+                new_coordinate = ((row-1),col)
+        if direction == 'E':
+            if (col+1) < len(COL_IDENTS)-1:
+                new_coordinate = (row,(col+1))
+        if direction == 'S':
+            if (row+1) < len(ROW_IDENTS):
+                new_coordinate = ((row+1),col)
+        if direction == 'W':
+            if (col-1) >= 0:
+                new_coordinate = (row,(col-1))
+
+        return new_coordinate
+
+    # Returns: (False, None) if no ship hits found on board.
+    #          (True, coordinate) if ship hit was found; 'coordinate' represents the "smart shot".
+    def generate_smart_shot(self):
+        new_coordinate = None
+
+        # Search the board to see if a ship has been hit
+        if not self.ship_found['tiles_hit']:
+            tiles_hit = [tile for ship_tiles in self.ships.values() for tile in ship_tiles if tile.status_code == 'X']
+            if tiles_hit:
+                self.ship_found['tiles_hit'] = [tiles_hit[0]]
+
+        # If no ship hits were found
+        if not self.ship_found['tiles_hit']:
+            return (False, None)
+
+        # If a direction has already been determined
+        if self.ship_found['direction']:
+            # If ship tile was hit in the previous shot and you've hit more than one ship tile,
+            # continue shotting in whatever direction you've been shooting
+            if self.ship_found['tiles_hit'][-1].status_code == 'X':
+                row = self.ship_found['tiles_hit'][-1].x
+                col = self.ship_found['tiles_hit'][-1].y
+                direction = self.ship_found['direction']
+
+                new_coordinate = self.check_shot_in_specified_direction((row,col), direction)
+                if new_coordinate and self.validate_shot(*new_coordinate):
+                    self.ship_found['tiles_hit'].append(self.board[new_coordinate[0]][new_coordinate[1]])
+                    self.ship_found['direction'] = direction
+                    return (True, new_coordinate)
+
+            # If the previous shot missed the ship, remove it from the "tiles_hit" list
+            del self.ship_found['tiles_hit'][-1]
+
+            # Makes sure the length of tiles is greater than 1 meaning a ship in some direction
+            # has been found.
+            if len(self.ship_found['tiles_hit']) > 1:
+                # If one or more ships have been hit but the previous shot on the board didn't hit a ship
+                # on the board, then try shooting in the oppposite direction of the first tile hit.
+                row = self.ship_found['tiles_hit'][0].x
+                col = self.ship_found['tiles_hit'][0].y
+                direction = None
+
+                # Determine the opposite direction to try
+                if self.ship_found['direction'] == 'N':
+                    direction = 'S'
+                elif self.ship_found['direction'] == 'E':
+                    direction = 'W'
+                elif self.ship_found['direction'] == 'S':
+                    direction = 'N'
+                elif self.ship_found['direction'] == 'W':
+                    direction = 'E'
+
+                # Check if the shot in the opposite direction of the first tile hit works
+                new_coordinate = self.check_shot_in_specified_direction((row,col), direction)
+                if new_coordinate and self.validate_shot(*new_coordinate):
+                    self.ship_found['tiles_hit'].append(self.board[new_coordinate[0]][new_coordinate[1]])
+                    self.ship_found['direction'] = direction
+                    return (True, new_coordinate)
+
+            self.ship_found['direction'] = None
+
+        # Find and attempt a valid shot around the one hit on the board until
+        # a second hit is made. Could also be that multiple tiles have been hit
+        # but the direction attempted was not valid so a new direction needs to
+        # be attempted.
+        if not self.ship_found['direction']:
+            row = self.ship_found['tiles_hit'][0].x
+            col = self.ship_found['tiles_hit'][0].y
+
+            # Checks in all 4 directions for a tile to shoot at
+            for i in range(4):
+                new_coordinate = self.check_shot_in_specified_direction((row,col), VALID_DIRECTIONS[i])
+                if new_coordinate and self.validate_shot(*new_coordinate):
+                    self.ship_found['tiles_hit'].append(self.board[new_coordinate[0]][new_coordinate[1]])
+                    self.ship_found['direction'] = VALID_DIRECTIONS[i]
+                    break
+
+        return (True, new_coordinate)
+
     def check_shot_input(self, coordinate_shot):
 
         # Strips the user's input of all spaces
@@ -237,6 +340,10 @@ class Board():
 
         # Returns true if a ship sunk
         if ships_to_be_removed:
+            # Clear the tiles for a ship being hit (for when using "generate_smart_shot")
+            self.ship_found['tiles_hit'] = None
+            self.ship_found['direction'] = None
+
             self.num_ships_sunk += 1
             return True
 

@@ -114,6 +114,46 @@ def test_computer_random_input_placing_shot():
     assert test_shot[0] in ROW_IDENTS
     assert test_shot[1] in COL_IDENTS
 
+def test_check_shot_in_specified_direction():
+    test_board = Board()
+    coordinate = test_board.check_shot_in_specified_direction((0,0), 'E')
+    assert coordinate == (0,1)
+
+    coordinate = test_board.check_shot_in_specified_direction((0,0), 'N')
+    assert coordinate == None
+
+def test_generate_smart_shot():
+    test_board = Board()
+    valid, position = test_board.check_ship_placement_input('B0 E', 3)
+    valid, locations = test_board.check_overlap(position, 3)
+    test_board.place_ship(locations)
+
+    smart_shot_found, coordinate = test_board.generate_smart_shot()
+    assert smart_shot_found == False
+
+    test_board.place_shot((1,1))
+    test_board.update_ships()
+
+    smart_shot_found, coordinate = test_board.generate_smart_shot()
+    assert coordinate == (0,1)
+    test_board.place_shot((0,1))
+    test_board.update_ships()
+
+    smart_shot_found, coordinate = test_board.generate_smart_shot()
+    assert coordinate == (1,2)
+    test_board.place_shot((1,2))
+    test_board.update_ships()
+
+    smart_shot_found, coordinate = test_board.generate_smart_shot()
+    assert coordinate == (1,3)
+    test_board.place_shot((1,3))
+    test_board.update_ships()
+
+    smart_shot_found, coordinate = test_board.generate_smart_shot()
+    assert coordinate == (1,0)
+    test_board.place_shot((1,0))
+    test_board.update_ships()
+
 def test_check_shot_input_invalid_input():
     test_board = Board()
     test_shot = 'A 0 4'

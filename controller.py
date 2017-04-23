@@ -100,8 +100,13 @@ if __name__ == '__main__':
 
             # Computer's turn to shoot
             while True:
-                comp_coordinate = user_board.generate_random_input(False)
-                comp_coordinate = user_board.convert_input(comp_coordinate)
+                smart_shot_found, comp_coordinate = user_board.generate_smart_shot()
+
+                # If no smart shot found, genereate a random shot
+                if not smart_shot_found:
+                    comp_coordinate = user_board.generate_random_input(False)
+                    comp_coordinate = user_board.convert_input(comp_coordinate)
+
                 if user_board.validate_shot(*comp_coordinate):
                     user_board.place_shot(comp_coordinate)
                     break
