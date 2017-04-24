@@ -83,19 +83,18 @@ if __name__ == '__main__':
                     if user_shot == 'X' and computer_board.bonus_shot > 0: # BONUS SHOT
                         while True:
                             View.bonus_shot_prompt(computer_board.bonus_shot)
-                            count = input('')
-                            count = int(count)
-                            if count > 0 and count <= computer_board.bonus_shot:
+                            bonus_shot_count = input('')
+                            bonus_shot_count = int(bonus_shot_count)
+                            if bonus_shot_count > 0 and bonus_shot_count <= computer_board.bonus_shot:
                                 break
 
-                        for i in range(count):
+                        for i in range(bonus_shot_count):
                             View.fire_shots()
                             user_shot = input('')
                             valid, user_coordinate = computer_board.check_shot_input(user_shot)
                             if valid:
                                 user_coordinate_converted = computer_board.convert_input(user_coordinate)
                                 if computer_board.validate_shot(*user_coordinate_converted):
-                                    count += 1
                                 else:
                                     View.invalid_shot()
                             else:
@@ -123,7 +122,7 @@ if __name__ == '__main__':
                             user_board.print_board('User')
                             computer_board.print_board('Computer')
                         
-                        computer_board.bonus_shot = 0 # resets bonus shot count for user
+                        computer_board.bonus_shot -= bonus_shot_count # reduces bonus_shot_count for user depending on how many he/she uses
                     else:
                         View.invalid_shot()
 
@@ -147,7 +146,18 @@ if __name__ == '__main__':
 
             # Computer's turn to shoot
             while True:
-                for i in range(user_board.bonus_shot)
+                smart_shot_found, comp_coordinate = user_board.generate_smart_shot()
+
+                # If no smart shot found, genereate a random shot
+                if not smart_shot_found:
+                    comp_coordinate = user_board.select_random_shot()
+
+                user_board.place_shot(comp_coordinate)
+                break
+                
+            # Computer checks if it has a bonus shot, it runs if it has a bonus shot
+            if user_board.bonus_shot > 0:
+                while True:
                     smart_shot_found, comp_coordinate = user_board.generate_smart_shot()
 
                     # If no smart shot found, genereate a random shot
