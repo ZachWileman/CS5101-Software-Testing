@@ -95,6 +95,7 @@ if __name__ == '__main__':
                             if valid:
                                 user_coordinate_converted = computer_board.convert_input(user_coordinate)
                                 if computer_board.validate_shot(*user_coordinate_converted):
+                                    do_nothing = 0
                                 else:
                                     View.invalid_shot()
                             else:
