@@ -14,10 +14,10 @@ def ship_placement_overlap():
     print('The location you gave overlapped with another ship.')
 
 def fire_shots():
-	print('Please enter the coordinates for where to fire your shot. Ex.( A 0 )')
+	print('Please enter the coordinates for where to fire your shot. Ex.( A 0 ), or \'X\' for a bonus shot')
 
 def invalid_shot():
-    print('You have entered an invalid coordinate location to shot.')
+    print('You have entered an invalid coordinate location to shoot or you do not have any bonus shots.')
 
 def hit_ship(coordinate):
 	print('You have hit a ship at coordinate {}\n'.format(coordinate))
@@ -42,3 +42,6 @@ def play_again():
 
 def invalid_input_on_play_again():
     print('Please enter either \'y\' or \'n\'.')
+
+def bonus_shot_prompt(bonus_shots):
+    print('How many bonus shots do you want to use? Available: {}'.format(bonus_shots))

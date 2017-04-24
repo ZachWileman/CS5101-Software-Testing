@@ -17,6 +17,7 @@ class Board():
         self.cols = 10
         self.num_ship_hits = 0 # The amount of times a shot hit a shit
         self.num_ships_sunk = 0
+        self.bonus_shot = 0 # bonus shot count
 
         # Member variables used by the computer
         self.tiles_to_attempt = []
@@ -365,7 +366,7 @@ class Board():
             # Clear the tiles for a ship being hit (for when using "generate_smart_shot")
             self.ship_found['tiles_hit'] = None
             self.ship_found['direction'] = None
-
+            self.bonus_shot += 1
             self.num_ships_sunk += 1
             return True
 
