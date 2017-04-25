@@ -17,8 +17,7 @@ class Board():
         self.cols = 10
         self.num_ship_hits = 0 # The amount of times a shot hit a shit
         self.num_ships_sunk = 0
-        self.bonus_shot = 0 # bonus shot count
-        self.aoe_shot = False
+        self.bonus_shots = 0
 
         # Member variables used by the computer
         self.tiles_to_attempt = []
@@ -298,7 +297,7 @@ class Board():
         # Validates the user input a valid number of characters and that the characters were
         # valid eligible characters
         if len(coordinate_shot) != 2:
-                return (False, None)
+            return (False, None)
         if coordinate_shot[0] not in ROW_IDENTS:
             return (False, None)
         if coordinate_shot[1] not in COL_IDENTS:
@@ -324,34 +323,30 @@ class Board():
         else:
             return False
 
-    def place_shot(self, coordinate): 
+    def validate_bonus_shots(self, num_bonus_shots):
+        try:
+            num_bonus_shots = int(num_bonus_shots)
+        except:
+            return False
+
+        if num_bonus_shots >= 0 and num_bonus_shots <= self.bonus_shots:
+            self.bonus_shots -= num_bonus_shots
+            return True
+
+        return False
+
+    def place_shot(self, coordinate):
         tile_status = self.board[coordinate[0]][coordinate[1]].status_code
-        
-        if self.aoe_shot == True:
-            check = False
-            for i in range(-1,2):
-                for j in range(-1,2):
-                    if coordinate[0]+i > 0 and coordinate[1]+j > 0 and coordinate[0]+i < 10 and coordinate[1]+j < 10:
-                        # Hit a ship
-                        if self.board[coordinate[0]+i][coordinate[1]+j].status_code == '!':
-                            self.board[coordinate[0]+i][coordinate[1]+j].status_code = 'X'
-                            self.num_ship_hits += 1
-                            check == True
-                        # Hit the water
-                        elif self.board[coordinate[0]+i][coordinate[1]+j].status_code == '~':
-                            self.board[coordinate[0]+i][coordinate[1]+j].status_code = '*'
-            self.aoe_shot == False
-            return check
-        else:
-            # Hit a ship
-            if tile_status == '!':
-                self.board[coordinate[0]][coordinate[1]].status_code = 'X'
-                self.num_ship_hits += 1
-                return True
-            # Hit the water
-            elif tile_status == '~':
-                self.board[coordinate[0]][coordinate[1]].status_code = '*'
-                return False
+
+        # Hit a ship
+        if tile_status == '!':
+            self.board[coordinate[0]][coordinate[1]].status_code = 'X'
+            self.num_ship_hits += 1
+            return True
+        # Hit the water
+        elif tile_status == '~':
+            self.board[coordinate[0]][coordinate[1]].status_code = '*'
+            return False
 
         return False
 
@@ -383,8 +378,8 @@ class Board():
             # Clear the tiles for a ship being hit (for when using "generate_smart_shot")
             self.ship_found['tiles_hit'] = None
             self.ship_found['direction'] = None
-            self.bonus_shot += 1
-            self.aoe_shot = True
+
+            self.bonus_shots += 1
             self.num_ships_sunk += 1
             return True
 

@@ -9,7 +9,6 @@ if __name__ == '__main__':
     keep_playing = True
     user_score = 0
     computer_score = 0
-    count = 0
 
     while keep_playing:
         View.start_message()
@@ -68,82 +67,62 @@ if __name__ == '__main__':
             user_board.print_board('User')
             computer_board.print_board('Computer')
 
-            # Loops until the user enters a valid shot
-            while True:
-                View.fire_shots()
-                user_shot = input('')
-                valid, user_coordinate = computer_board.check_shot_input(user_shot)
-                if valid:
-                    user_coordinate_converted = computer_board.convert_input(user_coordinate)
-                    if computer_board.validate_shot(*user_coordinate_converted):
+            # Default values set for when getting user input on shot locations
+            num_shots_left = 1
+
+            # Loops until the user uses all of the current shots
+            while num_shots_left:
+
+                # Loops until the user enters a valid shot
+                while True:
+                    # Default values set for when getting user input on shot locations
+                    user_shot = 'X'
+
+                    # Loops until the user doesn't try to input extra shots
+                    while user_shot == 'X':
+                        View.fire_shots()
+                        user_shot = input('')
+
+                        # If the user wants to use their extra shots
+                        if user_shot == 'X':
+                            View.num_bonus_shots(computer_board.bonus_shots)
+                            num_bonus_shots = input('')
+
+                            # If the user entered a valid number
+                            if computer_board.validate_bonus_shots(num_bonus_shots):
+                                View.add_bonus_shots(num_bonus_shots)
+                                num_shots_left += int(num_bonus_shots)
+                            else:
+                                View.invalid_bonus_shot_input()
+
+                    valid, user_coordinate = computer_board.check_shot_input(user_shot)
+                    if valid:
+                        user_coordinate_converted = computer_board.convert_input(user_coordinate)
+                        if computer_board.validate_shot(*user_coordinate_converted):
+                            num_shots_left -= 1
+                            break
+                        else:
+                            View.invalid_shot()
+                    else:
+                        View.invalid_shot()
+
+                # Update computer board with user's shot
+                if computer_board.place_shot(user_coordinate_converted):
+
+                    # Check if a ship was sunk with the hit
+                    if computer_board.update_ships():
+                        View.hit_and_sunk_ship(user_coordinate)
+                    else:
+                        View.hit_ship(user_coordinate)
+
+                    # Checks for winner
+                    if computer_board.check_win():
+                        View.print_winner('user')
                         break
-                    else:
-                        View.invalid_shot()
+
+                # Otherwise, prints shot missed
                 else:
-                    if user_shot == 'X' and computer_board.bonus_shot > 0: # BONUS SHOT
-                        while True:
-                            View.bonus_shot_prompt(computer_board.bonus_shot)
-                            bonus_shot_count = input('')
-                            bonus_shot_count = int(bonus_shot_count)
-                            if bonus_shot_count > 0 and bonus_shot_count <= computer_board.bonus_shot:
-                                break
-
-                        for i in range(bonus_shot_count):
-                            View.fire_shots()
-                            user_shot = input('')
-                            valid, user_coordinate = computer_board.check_shot_input(user_shot)
-                            if valid:
-                                user_coordinate_converted = computer_board.convert_input(user_coordinate)
-                                if computer_board.validate_shot(*user_coordinate_converted):
-                                    do_nothing = 0
-                                else:
-                                    View.invalid_shot()
-                            else:
-                                    View.invalid_shot()
-
-                            # Update computer board with user's shot
-                            if computer_board.place_shot(user_coordinate_converted):
-
-                                # Check if a ship was sunk with the hit
-                                if computer_board.update_ships():
-                                    View.hit_and_sunk_ship(user_coordinate)
-                                else:
-                                    View.hit_ship(user_coordinate)
-
-                                # Checks for winner
-                                if computer_board.check_win():
-                                    View.print_winner('user')
-                                    break
-
-                            # Otherwise, prints shot missed
-                            else:
-                                View.hit_missed(user_coordinate)
-                            
-                            computer_board.print_shot_board()
-                            user_board.print_board('User')
-                            computer_board.print_board('Computer')
-                        
-                        computer_board.bonus_shot -= bonus_shot_count # reduces bonus_shot_count for user depending on how many he/she uses
-                    else:
-                        View.invalid_shot()
-
-            # Update computer board with user's shot
-            if computer_board.place_shot(user_coordinate_converted):
-
-                # Check if a ship was sunk with the hit
-                if computer_board.update_ships():
-                    View.hit_and_sunk_ship(user_coordinate)
-                else:
-                    View.hit_ship(user_coordinate)
-
-                # Checks for winner
-                if computer_board.check_win():
-                    View.print_winner('user')
-                    break
-
-            # Otherwise, prints shot missed
-            else:
-                View.hit_missed(user_coordinate)
+                    View.hit_missed(user_coordinate)
 
             # Computer's turn to shoot
             while True:
@@ -155,18 +134,6 @@ if __name__ == '__main__':
 
                 user_board.place_shot(comp_coordinate)
                 break
-                
-            # Computer checks if it has a bonus shot, it runs if it has a bonus shot
-            if user_board.bonus_shot > 0:
-                while True:
-                    smart_shot_found, comp_coordinate = user_board.generate_smart_shot()
-
-                    # If no smart shot found, genereate a random shot
-                    if not smart_shot_found:
-                        comp_coordinate = user_board.select_random_shot()
-
-                    user_board.place_shot(comp_coordinate)
-                    break
 
             # Updates user's board with computers shots
             user_board.place_shot(comp_coordinate)
@@ -184,10 +151,6 @@ if __name__ == '__main__':
         # Print the scores
         View.print_score('user', user_score)
         View.print_score('computer', computer_score)
-
-        # Resets bonus shots
-        computer_board.bonus_shot = 0
-        user_board.bonus_shot = 0
 
         # Asks user if they would like to play again & validates input
         while True:
