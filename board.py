@@ -15,9 +15,9 @@ class Board():
         self.ships = {}
         self.rows = 10
         self.cols = 10
-        self.num_ship_hits = 0 # The amount of times a shot hit a shit
+        self.num_ship_hits = 0
         self.num_ships_sunk = 0
-        self.bonus_shot = 0 # bonus shot count
+        self.bonus_shots = 0
         self.aoe_shot = False
 
         # Member variables used by the computer
@@ -215,12 +215,11 @@ class Board():
     #          (True, coordinate) if ship hit was found; 'coordinate' represents the "smart shot".
     def generate_smart_shot(self):
         new_coordinate = None
+        shot_found = False
 
         # Search the board to see if a ship has been hit
         if not self.ship_found['tiles_hit']:
-            tiles_hit = [tile for ship_tiles in self.ships.values() for tile in ship_tiles if tile.status_code == 'X']
-            if tiles_hit:
-                self.ship_found['tiles_hit'] = [tiles_hit[0]]
+            self.ship_found['tiles_hit'] = [tile for ship_tiles in self.ships.values() for tile in ship_tiles if tile.status_code == 'X']
 
         # If no ship hits were found
         if not self.ship_found['tiles_hit']:
@@ -272,21 +271,39 @@ class Board():
 
             self.ship_found['direction'] = None
 
-        # Find and attempt a valid shot around the one hit on the board until
+        # Find and attempt a valid shot around the different hits on the board until
         # a second hit is made. Could also be that multiple tiles have been hit
         # but the direction attempted was not valid so a new direction needs to
         # be attempted.
         if not self.ship_found['direction']:
-            row = self.ship_found['tiles_hit'][0].x
-            col = self.ship_found['tiles_hit'][0].y
+            tiles_to_be_added = []
 
-            # Checks in all 4 directions for a tile to shoot at
-            for i in range(4):
-                new_coordinate = self.check_shot_in_specified_direction((row,col), VALID_DIRECTIONS[i])
-                if new_coordinate and self.validate_shot(*new_coordinate):
-                    self.ship_found['tiles_hit'].append(self.board[new_coordinate[0]][new_coordinate[1]])
-                    self.ship_found['direction'] = VALID_DIRECTIONS[i]
-                    break
+            # Loops until a valid shot is found
+            while not shot_found:
+                for tile in self.ship_found['tiles_hit']:
+                    row = tile.x
+                    col = tile.y
+
+                    # Checks in all 4 directions for a tile to shoot at
+                    for i in range(4):
+                        new_coordinate = self.check_shot_in_specified_direction((row,col), VALID_DIRECTIONS[i])
+                        if new_coordinate and self.validate_shot(*new_coordinate):
+                            self.ship_found['direction'] = VALID_DIRECTIONS[i]
+                            shot_found = True
+                            break
+
+                    # If it finds a valid tile with a shot around it to take, queue it up to be added and
+                    # then break from the for loop
+                    if shot_found:
+                        tiles_to_be_added = [tile, self.board[new_coordinate[0]][new_coordinate[1]]]
+                        break
+
+                self.ship_found['tiles_hit'] = tiles_to_be_added
+
+                # In the rare case the computer can't find a valid location based off of the current tiles given
+                if not self.ship_found['tiles_hit']:
+                    _, new_coordinate = self.generate_smart_shot()
+                    shot_found = True
 
         return (True, new_coordinate)
 
@@ -298,7 +315,7 @@ class Board():
         # Validates the user input a valid number of characters and that the characters were
         # valid eligible characters
         if len(coordinate_shot) != 2:
-                return (False, None)
+            return (False, None)
         if coordinate_shot[0] not in ROW_IDENTS:
             return (False, None)
         if coordinate_shot[1] not in COL_IDENTS:
@@ -324,34 +341,56 @@ class Board():
         else:
             return False
 
-    def place_shot(self, coordinate): 
+    def validate_bonus_shots(self, num_bonus_shots):
+        # Validates input is a number
+        try:
+            num_bonus_shots = int(num_bonus_shots)
+        except:
+            return False
+
+        # Checks input against valid range
+        if num_bonus_shots >= 0 and num_bonus_shots <= self.bonus_shots:
+            self.bonus_shots -= num_bonus_shots
+            return True
+
+        return False
+
+    def place_aoe_shot(self, coordinate):
+        self.aoe_shot = False
+
+        # Iterate over the 9 possible shots
+        for i in range(-1,2):
+            for j in range(-1,2):
+
+                # Grab the current row & col
+                row = coordinate[0]+i
+                col = coordinate[1]+j
+
+                # Validates each of the shots
+                if row >= 0 and col >= 0 and row < 10 and col < 10:
+                    if self.validate_shot(row,col):
+                        if self.place_shot((row,col)):
+                            self.update_ships()
+
+        # Clears these variables because the 'generate_smart_shot' doesn't pick
+        # up any ship tiles hit during this function. So, essentially, I'm flushing
+        # these values so that the board doesn't get possibly stuck looking at an
+        # old tile that has no possible shots around it to take.
+        self.ship_found['tiles_hit'] = None
+        self.ship_found['direction'] = None
+
+    def place_shot(self, coordinate):
         tile_status = self.board[coordinate[0]][coordinate[1]].status_code
-        
-        if self.aoe_shot == True:
-            check = False
-            for i in range(-1,2):
-                for j in range(-1,2):
-                    if coordinate[0]+i > 0 and coordinate[1]+j > 0 and coordinate[0]+i < 10 and coordinate[1]+j < 10:
-                        # Hit a ship
-                        if self.board[coordinate[0]+i][coordinate[1]+j].status_code == '!':
-                            self.board[coordinate[0]+i][coordinate[1]+j].status_code = 'X'
-                            self.num_ship_hits += 1
-                            check == True
-                        # Hit the water
-                        elif self.board[coordinate[0]+i][coordinate[1]+j].status_code == '~':
-                            self.board[coordinate[0]+i][coordinate[1]+j].status_code = '*'
-            self.aoe_shot == False
-            return check
-        else:
-            # Hit a ship
-            if tile_status == '!':
-                self.board[coordinate[0]][coordinate[1]].status_code = 'X'
-                self.num_ship_hits += 1
-                return True
-            # Hit the water
-            elif tile_status == '~':
-                self.board[coordinate[0]][coordinate[1]].status_code = '*'
-                return False
+
+        # Hit a ship
+        if tile_status == '!':
+            self.board[coordinate[0]][coordinate[1]].status_code = 'X'
+            self.num_ship_hits += 1
+            return True
+        # Hit the water
+        elif tile_status == '~':
+            self.board[coordinate[0]][coordinate[1]].status_code = '*'
+            return False
 
         return False
 
@@ -383,8 +422,9 @@ class Board():
             # Clear the tiles for a ship being hit (for when using "generate_smart_shot")
             self.ship_found['tiles_hit'] = None
             self.ship_found['direction'] = None
-            self.bonus_shot += 1
+
             self.aoe_shot = True
+            self.bonus_shots += 1
             self.num_ships_sunk += 1
             return True
 
