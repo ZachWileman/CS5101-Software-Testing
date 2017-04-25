@@ -15,6 +15,7 @@ if __name__ == '__main__':
         user_board = Board()
         computer_board = Board()
         user_board.generate_computers_random_shots()
+        winner_found = False
 
         user_board.print_board('User')
 
@@ -38,7 +39,6 @@ if __name__ == '__main__':
                 View.ship_placement_invalid()
 
         valid_inputs = 0
-
         # Load up computer's board with initial ships
         while valid_inputs != num_starting_ships:
             ship = computer_board.generate_random_ship_placement()
@@ -53,7 +53,7 @@ if __name__ == '__main__':
         View.start_game()
 
         # Loops until a winner is found
-        while True:
+        while not winner_found:
 
             valid = False
             user_coordinate = None
@@ -95,6 +95,7 @@ if __name__ == '__main__':
                             else:
                                 View.invalid_bonus_shot_input()
 
+                    # Validates user's input and prints messages accordingly
                     valid, user_coordinate = computer_board.check_shot_input(user_shot)
                     if valid:
                         user_coordinate_converted = computer_board.convert_input(user_coordinate)
@@ -106,34 +107,50 @@ if __name__ == '__main__':
                     else:
                         View.invalid_shot()
 
-                # Update computer board with user's shot
-                if computer_board.place_shot(user_coordinate_converted):
-
-                    # Check if a ship was sunk with the hit
-                    if computer_board.update_ships():
-                        View.hit_and_sunk_ship(user_coordinate)
-                    else:
-                        View.hit_ship(user_coordinate)
-
-                    # Checks for winner
-                    if computer_board.check_win():
-                        View.print_winner('user')
-                        break
-
-                # Otherwise, prints shot missed
+                # Checks for aoe shot
+                if computer_board.aoe_shot:
+                    computer_board.place_aoe_shot(user_coordinate_converted)
                 else:
-                    View.hit_missed(user_coordinate)
+                    # Update computer board with user's shot
+                    if computer_board.place_shot(user_coordinate_converted):
 
-            # Computer's turn to shoot
-            while True:
+                        # Check if a ship was sunk with the hit
+                        if computer_board.update_ships():
+                            View.hit_and_sunk_ship(user_coordinate)
+                        else:
+                            View.hit_ship(user_coordinate)
+
+                    # Otherwise, prints shot missed
+                    else:
+                        View.hit_missed(user_coordinate)
+
+                # Checks for winner
+                if computer_board.check_win():
+                    winner_found = True
+                    break
+
+            if winner_found:
+                View.print_winner('user')
+                break
+
+            # Adds 1 for each of the computers turn; being used for two purposes rather
+            # than creating a new counter variable in the controller
+            user_board.bonus_shots += 1
+
+            # Computer's turn to shoot; loops until its used all of its availble shots
+            while user_board.bonus_shots:
                 smart_shot_found, comp_coordinate = user_board.generate_smart_shot()
 
-                # If no smart shot found, genereate a random shot
+                # If no smart shot found, generate a random shot
                 if not smart_shot_found:
                     comp_coordinate = user_board.select_random_shot()
 
-                user_board.place_shot(comp_coordinate)
-                break
+                if user_board.aoe_shot:
+                    user_board.place_aoe_shot(comp_coordinate)
+                else:
+                    user_board.place_shot(comp_coordinate)
+
+                user_board.bonus_shots -= 1
 
             # Updates user's board with computers shots
             user_board.place_shot(comp_coordinate)

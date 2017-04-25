@@ -266,6 +266,24 @@ def test_validate_bonus_shots():
     valid = test_board.validate_bonus_shots('1')
     assert valid == False
 
+def test_place_aoe_shot():
+    test_board = Board()
+    test_board = Board()
+    valid, position = test_board.check_ship_placement_input('A0 S', 3)
+    valid, locations = test_board.check_overlap(position, 3)
+    test_board.place_ship(locations)
+
+    test_board.place_aoe_shot((1,1))
+    assert test_board.board[0][0].status_code == 'S'
+    assert test_board.board[1][0].status_code == 'S'
+    assert test_board.board[2][0].status_code == 'S'
+    assert test_board.board[0][1].status_code == '*'
+    assert test_board.board[1][1].status_code == '*'
+    assert test_board.board[2][1].status_code == '*'
+    assert test_board.board[0][2].status_code == '*'
+    assert test_board.board[1][2].status_code == '*'
+    assert test_board.board[2][2].status_code == '*'
+
 def test_update_ships():
     test_board = Board()
     test_input = "A0 S"
