@@ -16,6 +16,7 @@ if __name__ == '__main__':
         computer_board = Board()
         user_board.generate_computers_random_shots()
         winner_found = False
+        user_output = []
 
         user_board.print_board('User')
 
@@ -61,11 +62,16 @@ if __name__ == '__main__':
             user_coordinate_converted = None
             comp_coordinate_converted = None
 
-            # Print out the user's shot board and ship board
-            # Along with the computer's board for demonstration purposes
+            # Print out the user's shot board and ship board along with the
+            # computer's board for demonstration purposes.
             computer_board.print_shot_board()
             user_board.print_board('User')
             computer_board.print_board('Computer')
+
+            # Prints out collected user output
+            for line in user_output:
+                print(line)
+            user_output = []
 
             # Default values set for when getting user input on shot locations
             num_shots_left = 1
@@ -116,13 +122,27 @@ if __name__ == '__main__':
 
                         # Check if a ship was sunk with the hit
                         if computer_board.update_ships():
-                            View.hit_and_sunk_ship(user_coordinate)
+                            user_output.append(View.hit_and_sunk_ship(user_coordinate))
                         else:
-                            View.hit_ship(user_coordinate)
+                            user_output.append(View.hit_ship(user_coordinate))
 
                     # Otherwise, prints shot missed
                     else:
-                        View.hit_missed(user_coordinate)
+                        user_output.append(View.hit_missed(user_coordinate))
+
+                # Print out the user's shot board and ship board along with the
+                # computer's board for demonstration purposes. Prints boards here
+                # for the purpose of showing the boards when the users shoots more
+                # than one shot.
+                computer_board.print_shot_board()
+                user_board.print_board('User')
+                computer_board.print_board('Computer')
+
+                if num_shots_left != 0:
+                    # Prints out collected user output
+                    for line in user_output:
+                        print(line)
+                    user_output = []
 
                 # Checks for winner
                 if computer_board.check_win():
@@ -158,6 +178,11 @@ if __name__ == '__main__':
 
             # Check for win condition
             if user_board.check_win():
+                # Prints final boards
+                computer_board.print_shot_board()
+                user_board.print_board('User')
+                computer_board.print_board('Computer')
+
                 View.print_winner('computer')
                 break
 

@@ -30,13 +30,13 @@ def invalid_shot():
     print('You have entered an invalid coordinate location to shot.')
 
 def hit_ship(coordinate):
-	print('You have hit a ship at coordinate {}\n'.format(coordinate))
+	return 'You have hit a ship at coordinate {}\n'.format(coordinate)
 
 def hit_missed(coordinate):
-	print('You have missed your shot at coordinate {}\n'.format(coordinate))
+	return 'You have missed your shot at coordinate {}\n'.format(coordinate)
 
 def hit_and_sunk_ship(coordinate):
-    print('You\'ve hit a ship at coordinate {} and sunk the ship\n'.format(coordinate))
+    return 'You\'ve hit a ship at coordinate {} and sunk the ship\n'.format(coordinate)
 
 def start_game():
     print('BEGIN THE GAME!\n')
