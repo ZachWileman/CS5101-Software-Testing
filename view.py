@@ -15,7 +15,7 @@ def ship_placement_overlap():
 
 def fire_shots():
 	print('Please enter the coordinates for where to fire your shot. '+
-          'Ex.( A 0 ) Or enter X to bonus shots to your current number of shots available.')
+          'Ex.( A 0 ) Or enter X to add bonus shots to your current number of shots available.')
 
 def num_bonus_shots(num_shots_available):
     print('Please enter the number of bonus shots you\'d like to use. Available bonus shots: {}'.format(num_shots_available))
