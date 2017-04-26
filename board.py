@@ -240,7 +240,8 @@ class Board():
                     self.ship_found['direction'] = direction
                     return (True, new_coordinate)
 
-            # If the previous shot missed the ship, remove it from the "tiles_hit" list
+            # If the previous shot missed the ship or if the previous shot with the given direction would lead
+            # to a shot that went off the board, remove it from the "tiles_hit" list
             del self.ship_found['tiles_hit'][-1]
 
             # If one or more ships have been hit but the previous shot on the board didn't hit a ship
