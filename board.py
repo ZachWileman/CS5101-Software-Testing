@@ -243,31 +243,28 @@ class Board():
             # If the previous shot missed the ship, remove it from the "tiles_hit" list
             del self.ship_found['tiles_hit'][-1]
 
-            # Makes sure the length of tiles is greater than 1 meaning a ship in some direction
-            # has been found.
-            if len(self.ship_found['tiles_hit']) > 1:
-                # If one or more ships have been hit but the previous shot on the board didn't hit a ship
-                # on the board, then try shooting in the oppposite direction of the first tile hit.
-                row = self.ship_found['tiles_hit'][0].x
-                col = self.ship_found['tiles_hit'][0].y
-                direction = None
+            # If one or more ships have been hit but the previous shot on the board didn't hit a ship
+            # on the board, then try shooting in the oppposite direction of the first tile hit.
+            row = self.ship_found['tiles_hit'][0].x
+            col = self.ship_found['tiles_hit'][0].y
+            direction = None
 
-                # Determine the opposite direction to try
-                if self.ship_found['direction'] == 'N':
-                    direction = 'S'
-                elif self.ship_found['direction'] == 'E':
-                    direction = 'W'
-                elif self.ship_found['direction'] == 'S':
-                    direction = 'N'
-                elif self.ship_found['direction'] == 'W':
-                    direction = 'E'
+            # Determine the opposite direction to try
+            if self.ship_found['direction'] == 'N':
+                direction = 'S'
+            elif self.ship_found['direction'] == 'E':
+                direction = 'W'
+            elif self.ship_found['direction'] == 'S':
+                direction = 'N'
+            elif self.ship_found['direction'] == 'W':
+                direction = 'E'
 
-                # Check if the shot in the opposite direction of the first tile hit works
-                new_coordinate = self.check_shot_in_specified_direction((row,col), direction)
-                if new_coordinate and self.validate_shot(*new_coordinate):
-                    self.ship_found['tiles_hit'].append(self.board[new_coordinate[0]][new_coordinate[1]])
-                    self.ship_found['direction'] = direction
-                    return (True, new_coordinate)
+            # Check if the shot in the opposite direction of the first tile hit works
+            new_coordinate = self.check_shot_in_specified_direction((row,col), direction)
+            if new_coordinate and self.validate_shot(*new_coordinate):
+                self.ship_found['tiles_hit'].append(self.board[new_coordinate[0]][new_coordinate[1]])
+                self.ship_found['direction'] = direction
+                return (True, new_coordinate)
 
             self.ship_found['direction'] = None
 
