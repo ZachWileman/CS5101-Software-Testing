@@ -174,6 +174,11 @@ def test_generate_smart_shot():
     test_board.update_ships()
 
     smart_shot_found, coordinate = test_board.generate_smart_shot()
+    assert coordinate == (2,1)
+    test_board.place_shot((2,1))
+    test_board.update_ships()
+
+    smart_shot_found, coordinate = test_board.generate_smart_shot()
     assert coordinate == (1,2)
     test_board.place_shot((1,2))
     test_board.update_ships()
